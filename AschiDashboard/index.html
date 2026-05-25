@@ -1,201 +1,441 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel Financeiro</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>ASCHI Finance</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
 </head>
+
 <body>
-    <div class="container">
-        <aside class="sidebar">
-            <header class="logo">
-                <h2>ASCHI</h2>
-            </header>
 
-            <nav class="menu">
-                <a href="#" class="active">
-                    <i class="fa-solid fa-chart-line"></i>
-                    <span>Dashboard</span>
-                </a>
-                <a href="#">
-                    <i class="fa-solid fa-users"></i>
-                    <span>Clientes</span>
-                </a>
-                <a href="#">
-                    <i class="fa-solid fa-triangle-exclamation"></i>
-                    <span>Pendências</span>
-                </a>
-                <a href="#">
-                    <i class="fa-solid fa-calculator"></i>
-                    <span>Calculadoras</span>
-                </a>
-                <a href="#">
-                    <i class="fa-solid fa-folder"></i>
-                    <span>Documentos</span>
-                </a>
-            </nav>
+    <div class="layout">
 
-            <footer class="sidebar-footer">
-                <div class="user-info">
-                    <div class="user-avatar">
-                        <i class="fa-solid fa-user"></i>
-                    </div>
-                    <div class="user-text">
-                        <h4>Almir</h4>
-                        <p>Administrador</p>
-                    </div>
+        <aside
+            class="sidebar"
+            id="sidebar"
+        >
+
+            <div>
+
+                <header class="logo-area">
+
+                    <button
+                        class="toggle-btn"
+                        id="toggleBtn"
+                    >
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+
+                    <h1>ASCHI</h1>
+
+                </header>
+
+                <nav class="menu">
+
+                    <a
+                        href="#"
+                        class="active"
+                    >
+                        <i class="fa-solid fa-chart-line"></i>
+
+                        <span>Dashboard</span>
+                    </a>
+
+                    <a href="#">
+                        <i class="fa-solid fa-arrow-trend-up"></i>
+
+                        <span>Entradas</span>
+                    </a>
+
+                    <a href="#">
+                        <i class="fa-solid fa-arrow-trend-down"></i>
+
+                        <span>Saídas</span>
+                    </a>
+
+                    <a href="#">
+                        <i class="fa-solid fa-file-invoice-dollar"></i>
+
+                        <span>Contas</span>
+                    </a>
+
+                    <a href="#">
+                        <i class="fa-solid fa-chart-pie"></i>
+
+                        <span>Relatórios</span>
+                    </a>
+
+                    <a href="#">
+                        <i class="fa-solid fa-calculator"></i>
+
+                        <span>Calculadoras</span>
+                    </a>
+
+                </nav>
+
+            </div>
+
+            <footer class="profile">
+
+                <div class="profile-icon">
+                    <i class="fa-solid fa-user"></i>
                 </div>
+
+                <div class="profile-text">
+
+                    <h2>Almir</h2>
+
+                    <p>Administrador</p>
+
+                </div>
+
             </footer>
+
         </aside>
 
-        <main class="dashboard">
-            <header class="topbar">
-                <div class="topbar-text">
-                    <h1>Painel Financeiro</h1>
-                    <p>Acompanhe receitas, despesas, clientes e desempenho financeiro.</p>
-                </div>
+        <main class="main-content">
 
-                <div class="topbar-actions">
+            <header class="topbar">
+
+                <section class="topbar-text">
+
+                    <h2>Painel Financeiro</h2>
+
+                    <p>
+                        Controle mensal de entradas,
+                        saídas e contas da empresa.
+                    </p>
+
+                </section>
+
+                <section class="topbar-actions">
+
                     <select>
                         <option>2026</option>
+
                         <option>2025</option>
-                        <option>2024</option>
                     </select>
+
                     <select>
+
                         <option>Janeiro</option>
+
                         <option>Fevereiro</option>
+
                         <option>Março</option>
+
                     </select>
-                </div>
+
+                </section>
+
             </header>
 
-            <section class="kpi-cards">
-                <article class="card revenue">
-                    <div class="card-icon">
-                        <i class="fa-solid fa-dollar-sign"></i>
+            <section class="cards">
+
+                <article class="card">
+
+                    <div class="card-top">
+
+                        <p>Entradas</p>
+
+                        <div class="icon blue">
+
+                            <i class="fa-solid fa-arrow-trend-up"></i>
+
+                        </div>
+
                     </div>
-                    <div class="card-info">
-                        <h3>Receita</h3>
-                        <h2>R$ 178.000</h2>
-                    </div>
+
+                    <h3>R$ 128.400</h3>
+
+                    <small>
+                        +8.2% este mês
+                    </small>
+
                 </article>
 
-                <article class="card expense">
-                    <div class="card-icon">
-                        <i class="fa-solid fa-wallet"></i>
+                <article class="card">
+
+                    <div class="card-top">
+
+                        <p>Saídas</p>
+
+                        <div class="icon red">
+
+                            <i class="fa-solid fa-arrow-trend-down"></i>
+
+                        </div>
+
                     </div>
-                    <div class="card-info">
-                        <h3>Despesas</h3>
-                        <h2>R$ 89.000</h2>
-                    </div>
+
+                    <h3>R$ 76.900</h3>
+
+                    <small>
+                        -2.1% este mês
+                    </small>
+
                 </article>
 
-                <article class="card profit">
-                    <div class="card-icon">
-                        <i class="fa-solid fa-chart-pie"></i>
+                <article class="card">
+
+                    <div class="card-top">
+
+                        <p>Lucro Líquido</p>
+
+                        <div class="icon green">
+
+                            <i class="fa-solid fa-sack-dollar"></i>
+
+                        </div>
+
                     </div>
-                    <div class="card-info">
-                        <h3>Lucro</h3>
-                        <h2>R$ 89.000</h2>
-                    </div>
+
+                    <h3>R$ 51.500</h3>
+
+                    <small>
+                        Resultado positivo
+                    </small>
+
                 </article>
 
-                <article class="card pending">
-                    <div class="card-icon">
-                        <i class="fa-solid fa-clock"></i>
+                <article class="card">
+
+                    <div class="card-top">
+
+                        <p>Contas a Pagar</p>
+
+                        <div class="icon yellow">
+
+                            <i class="fa-solid fa-clock"></i>
+
+                        </div>
+
                     </div>
-                    <div class="card-info">
-                        <h3>Pendências</h3>
-                        <h2>12</h2>
-                    </div>
+
+                    <h3>18</h3>
+
+                    <small>
+                        Próximos vencimentos
+                    </small>
+
                 </article>
+
             </section>
 
-            <section class="dashboard-grid">
-                <section class="main-chart">
-                    <div class="section-header">
-                        <h2>Fluxo Financeiro</h2>
-                    </div>
+            <section class="grid-area">
+
+                <section class="main-chart glass">
+
+                    <header class="title">
+
+                        <h3>
+                            Fluxo Financeiro Mensal
+                        </h3>
+
+                    </header>
+
                     <div class="chart-placeholder">
-                        <i class="fa-solid fa-chart-simple"></i>
-                        <p>GRÁFICO PRINCIPAL</p>
+
+                        <i class="fa-solid fa-chart-line"></i>
+
+                        <p>
+                            GRÁFICO DE ENTRADAS E SAÍDAS
+                        </p>
+
                     </div>
+
                 </section>
 
-                <aside class="filters-panel">
-                    <div class="filter-box">
-                        <h3>Ano</h3>
-                        <button>2026</button>
-                        <button>2025</button>
-                        <button>2024</button>
-                    </div>
+                <aside class="side-content">
 
-                    <div class="filter-box">
-                        <h3>Categoria</h3>
+                    <section class="mini-card glass">
+
+                        <header class="title">
+
+                            <h3>Resumo</h3>
+
+                        </header>
+
+                        <div class="mini-info">
+
+                            <div>
+
+                                <span>Entradas</span>
+
+                                <strong>R$ 128k</strong>
+
+                            </div>
+
+                            <div>
+
+                                <span>Saídas</span>
+
+                                <strong>R$ 76k</strong>
+
+                            </div>
+
+                            <div>
+
+                                <span>Lucro</span>
+
+                                <strong>R$ 52k</strong>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                    <section class="mini-card glass">
+
+                        <header class="title">
+
+                            <h3>Categorias</h3>
+
+                        </header>
+
                         <button>Impostos</button>
+
+                        <button>Operacional</button>
+
                         <button>Clientes</button>
-                        <button>Lucro</button>
-                    </div>
+
+                        <button>Funcionários</button>
+
+                    </section>
+
                 </aside>
+
             </section>
 
-            <section class="bottom-section">
-                <section class="small-chart">
-                    <div class="section-header">
-                        <h2>Despesas</h2>
-                    </div>
-                    <div class="chart-placeholder">
-                        <i class="fa-solid fa-chart-pie"></i>
-                        <p>GRÁFICO PIZZA</p>
-                    </div>
-                </section>
+            <section class="bottom-grid">
 
-                <section class="small-chart">
-                    <div class="section-header">
-                        <h2>Clientes</h2>
-                    </div>
-                    <div class="chart-placeholder">
-                        <i class="fa-solid fa-chart-column"></i>
-                        <p>GRÁFICO BARRAS</p>
-                    </div>
-                </section>
+                <section class="table-card glass">
 
-                <section class="activity-table">
-                    <div class="section-header">
-                        <h2>Atividades Recentes</h2>
-                    </div>
+                    <header class="title">
+
+                        <h3>
+                            Últimas Movimentações
+                        </h3>
+
+                    </header>
 
                     <table>
+
                         <thead>
+
                             <tr>
-                                <th>Cliente</th>
-                                <th>Status</th>
-                                <th>Data</th>
+
+                                <th>Descrição</th>
+
+                                <th>Tipo</th>
+
+                                <th>Valor</th>
+
                             </tr>
+
                         </thead>
+
                         <tbody>
+
                             <tr>
-                                <td>Empresa XPTO</td>
-                                <td>Pendente</td>
-                                <td>25/05</td>
+
+                                <td>
+                                    Pagamento fornecedor
+                                </td>
+
+                                <td>Saída</td>
+
+                                <td>R$ 4.200</td>
+
                             </tr>
+
                             <tr>
-                                <td>Alpha LTDA</td>
-                                <td>Finalizado</td>
-                                <td>24/05</td>
+
+                                <td>
+                                    Recebimento cliente
+                                </td>
+
+                                <td>Entrada</td>
+
+                                <td>R$ 12.500</td>
+
                             </tr>
+
                             <tr>
-                                <td>Mercado Sul</td>
-                                <td>Atualização</td>
-                                <td>23/05</td>
+
+                                <td>
+                                    Conta de energia
+                                </td>
+
+                                <td>Saída</td>
+
+                                <td>R$ 890</td>
+
                             </tr>
+
                         </tbody>
+
                     </table>
+
                 </section>
+
+                <section class="small-chart glass">
+
+                    <header class="title">
+
+                        <h3>Despesas</h3>
+
+                    </header>
+
+                    <div class="chart-placeholder small">
+
+                        <i class="fa-solid fa-chart-pie"></i>
+
+                    </div>
+
+                </section>
+
             </section>
+
         </main>
+
     </div>
+
+    <script>
+
+        const toggleBtn =
+        document.getElementById('toggleBtn')
+
+        const sidebar =
+        document.getElementById('sidebar')
+
+        toggleBtn.onclick = () => {
+
+            sidebar.classList.toggle('closed')
+
+        }
+
+    </script>
+
 </body>
+
 </html>
