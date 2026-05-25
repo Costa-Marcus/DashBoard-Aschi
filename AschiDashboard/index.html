@@ -1,12 +1,203 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aschi</title>
+    <title>Painel Financeiro</title>
+    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="assets/css/sidebar.css">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
-
 <body>
-    
+    <div class="container">
+        <aside class="sidebar">
+            <header class="logo">
+                <h2>ASCHI</h2>
+            </header>
+
+            <nav class="menu">
+                <a href="#" class="active">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#">
+                    <i class="fa-solid fa-users"></i>
+                    <span>Clientes</span>
+                </a>
+                <a href="#">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <span>Pendências</span>
+                </a>
+                <a href="#">
+                    <i class="fa-solid fa-calculator"></i>
+                    <span>Calculadoras</span>
+                </a>
+                <a href="#">
+                    <i class="fa-solid fa-folder"></i>
+                    <span>Documentos</span>
+                </a>
+            </nav>
+
+            <footer class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <div class="user-text">
+                        <h4>Almir</h4>
+                        <p>Administrador</p>
+                    </div>
+                </div>
+            </footer>
+        </aside>
+
+        <main class="dashboard">
+            <header class="topbar">
+                <div class="topbar-text">
+                    <h1>Painel Financeiro</h1>
+                    <p>Acompanhe receitas, despesas, clientes e desempenho financeiro.</p>
+                </div>
+
+                <div class="topbar-actions">
+                    <select>
+                        <option>2026</option>
+                        <option>2025</option>
+                        <option>2024</option>
+                    </select>
+                    <select>
+                        <option>Janeiro</option>
+                        <option>Fevereiro</option>
+                        <option>Março</option>
+                    </select>
+                </div>
+            </header>
+
+            <section class="kpi-cards">
+                <article class="card revenue">
+                    <div class="card-icon">
+                        <i class="fa-solid fa-dollar-sign"></i>
+                    </div>
+                    <div class="card-info">
+                        <h3>Receita</h3>
+                        <h2>R$ 178.000</h2>
+                    </div>
+                </article>
+
+                <article class="card expense">
+                    <div class="card-icon">
+                        <i class="fa-solid fa-wallet"></i>
+                    </div>
+                    <div class="card-info">
+                        <h3>Despesas</h3>
+                        <h2>R$ 89.000</h2>
+                    </div>
+                </article>
+
+                <article class="card profit">
+                    <div class="card-icon">
+                        <i class="fa-solid fa-chart-pie"></i>
+                    </div>
+                    <div class="card-info">
+                        <h3>Lucro</h3>
+                        <h2>R$ 89.000</h2>
+                    </div>
+                </article>
+
+                <article class="card pending">
+                    <div class="card-icon">
+                        <i class="fa-solid fa-clock"></i>
+                    </div>
+                    <div class="card-info">
+                        <h3>Pendências</h3>
+                        <h2>12</h2>
+                    </div>
+                </article>
+            </section>
+
+            <section class="dashboard-grid">
+                <section class="main-chart">
+                    <div class="section-header">
+                        <h2>Fluxo Financeiro</h2>
+                    </div>
+                    <div class="chart-placeholder">
+                        <i class="fa-solid fa-chart-simple"></i>
+                        <p>GRÁFICO PRINCIPAL</p>
+                    </div>
+                </section>
+
+                <aside class="filters-panel">
+                    <div class="filter-box">
+                        <h3>Ano</h3>
+                        <button>2026</button>
+                        <button>2025</button>
+                        <button>2024</button>
+                    </div>
+
+                    <div class="filter-box">
+                        <h3>Categoria</h3>
+                        <button>Impostos</button>
+                        <button>Clientes</button>
+                        <button>Lucro</button>
+                    </div>
+                </aside>
+            </section>
+
+            <section class="bottom-section">
+                <section class="small-chart">
+                    <div class="section-header">
+                        <h2>Despesas</h2>
+                    </div>
+                    <div class="chart-placeholder">
+                        <i class="fa-solid fa-chart-pie"></i>
+                        <p>GRÁFICO PIZZA</p>
+                    </div>
+                </section>
+
+                <section class="small-chart">
+                    <div class="section-header">
+                        <h2>Clientes</h2>
+                    </div>
+                    <div class="chart-placeholder">
+                        <i class="fa-solid fa-chart-column"></i>
+                        <p>GRÁFICO BARRAS</p>
+                    </div>
+                </section>
+
+                <section class="activity-table">
+                    <div class="section-header">
+                        <h2>Atividades Recentes</h2>
+                    </div>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Cliente</th>
+                                <th>Status</th>
+                                <th>Data</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Empresa XPTO</td>
+                                <td>Pendente</td>
+                                <td>25/05</td>
+                            </tr>
+                            <tr>
+                                <td>Alpha LTDA</td>
+                                <td>Finalizado</td>
+                                <td>24/05</td>
+                            </tr>
+                            <tr>
+                                <td>Mercado Sul</td>
+                                <td>Atualização</td>
+                                <td>23/05</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </section>
+        </main>
+    </div>
 </body>
 </html>
