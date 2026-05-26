@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadoras | ASCHI Finance</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/calculadoras.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="../js/calculadoras.js" defer></script>
+</head>
+<body>
+    <div class="layout">
+        <aside class="sidebar" id="sidebar" aria-label="Navegação principal">
+            <div>
+                <header class="logo-area">
+                    <button class="toggle-btn" id="toggleBtn" type="button" aria-label="Alternar menu lateral" aria-expanded="true">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div>
+                        <h1>ASCHI</h1>
+                        <span>Finance</span>
+                    </div>
+                </header>
+
+                <nav class="menu">
+                    <a href="../index.html">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="#">
+                        <i class="fa-solid fa-arrow-trend-up"></i>
+                        <span>Entradas</span>
+                    </a>
+                    <a href="#">
+                        <i class="fa-solid fa-arrow-trend-down"></i>
+                        <span>Saídas</span>
+                    </a>
+                    <a href="#">
+                        <i class="fa-solid fa-file-invoice-dollar"></i>
+                        <span>Contas</span>
+                    </a>
+                    <a href="#">
+                        <i class="fa-solid fa-chart-pie"></i>
+                        <span>Relatórios</span>
+                    </a>
+                    <a href="Calculadora.html" class="active" aria-current="page">
+                        <i class="fa-solid fa-calculator"></i>
+                        <span>Calculadoras</span>
+                    </a>
+                </nav>
+            </div>
+
+            <footer class="profile">
+                <div class="profile-icon">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <div class="profile-text">
+                    <h2>Almir</h2>
+                    <p>Administrador</p>
+                </div>
+            </footer>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <section class="topbar-text" aria-labelledby="calculadorasTitle">
+                    <span class="eyebrow">Rotina contábil</span>
+                    <h2 id="calculadorasTitle">Calculadoras</h2>
+                    <p>Ferramentas focadas em pró-labore, IRRF, FGTS e projeções financeiras.</p>
+                </section>
+            </header>
+
+            <section class="calculators-grid" aria-label="Calculadoras disponíveis">
+                <article class="calculator-card glass featured-card">
+                    <header class="card-header">
+                        <div class="icon blue">
+                            <i class="fa-solid fa-user-tie"></i>
+                        </div>
+                        <div>
+                            <h3>Pró-labore</h3>
+                            <p>Calcula INSS progressivo, IRRF estimado e valor líquido do sócio.</p>
+                        </div>
+                    </header>
+
+                    <form class="calculator-form" data-calculator="prolabore">
+                        <label for="prolaboreBruto">Pró-labore bruto</label>
+                        <input type="number" id="prolaboreBruto" name="prolaboreBruto" min="0" step="0.01" placeholder="Ex: 7500">
+
+                        <label for="prolaboreDependentes">Dependentes</label>
+                        <input type="number" id="prolaboreDependentes" name="prolaboreDependentes" min="0" step="1" placeholder="Ex: 1">
+
+                        <div class="deduction-builder" data-deduction-scope="prolabore">
+                            <label for="tipoDeducaoProlabore">Adicionar dedução</label>
+                            <div class="deduction-row">
+                                <select id="tipoDeducaoProlabore" data-deduction-type>
+                                    <option value="Pensão alimentícia">Pensão alimentícia</option>
+                                    <option value="Previdência privada">Previdência privada</option>
+                                    <option value="FAPI">FAPI</option>
+                                    <option value="Previdência oficial complementar">Previdência oficial complementar</option>
+                                    <option value="Outra dedução legal">Outra dedução legal</option>
+                                </select>
+                                <input type="number" data-deduction-value min="0" step="0.01" placeholder="Valor">
+                                <button type="button" data-add-deduction>
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </div>
+                            <ul class="deduction-list" id="deducoesProlabore"></ul>
+                        </div>
+
+                        <button type="submit">Calcular</button>
+                    </form>
+
+                    <output class="result" id="resultadoProlabore">R$ 0</output>
+                    <div class="result-breakdown" id="detalheProlabore"></div>
+                </article>
+
+                <article class="calculator-card glass featured-card partner-card">
+                    <header class="card-header">
+                        <div class="icon green">
+                            <i class="fa-solid fa-briefcase"></i>
+                        </div>
+                        <div>
+                            <h3>Retirada do Sócio</h3>
+                            <p>Informe quanto o sócio ganha e veja a estimativa de impostos sobre pró-labore.</p>
+                        </div>
+                    </header>
+
+                    <form class="calculator-form" data-calculator="partnerTaxes">
+                        <label for="socioBruto">Valor recebido como sócio</label>
+                        <input type="number" id="socioBruto" name="socioBruto" min="0" step="0.01" placeholder="Ex: 10000">
+
+                        <label for="socioDependentes">Dependentes</label>
+                        <input type="number" id="socioDependentes" name="socioDependentes" min="0" step="1" placeholder="Ex: 0">
+
+                        <div class="deduction-builder" data-deduction-scope="socio">
+                            <label for="tipoDeducaoSocio">Adicionar dedução</label>
+                            <div class="deduction-row">
+                                <select id="tipoDeducaoSocio" data-deduction-type>
+                                    <option value="Pensão alimentícia">Pensão alimentícia</option>
+                                    <option value="Previdência privada">Previdência privada</option>
+                                    <option value="FAPI">FAPI</option>
+                                    <option value="Previdência oficial complementar">Previdência oficial complementar</option>
+                                    <option value="Outra dedução legal">Outra dedução legal</option>
+                                </select>
+                                <input type="number" data-deduction-value min="0" step="0.01" placeholder="Valor">
+                                <button type="button" data-add-deduction>
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </div>
+                            <ul class="deduction-list" id="deducoesSocio"></ul>
+                        </div>
+
+                        <button type="submit">Calcular impostos</button>
+                    </form>
+
+                    <output class="result" id="resultadoSocio">R$ 0</output>
+                    <div class="result-breakdown" id="detalheSocio"></div>
+                </article>
+
+                <article class="calculator-card glass featured-card">
+                    <header class="card-header">
+                        <div class="icon red">
+                            <i class="fa-solid fa-receipt"></i>
+                        </div>
+                        <div>
+                            <h3>IRRF Mensal</h3>
+                            <p>Simula o imposto com INSS, dependentes, desconto simplificado e deduções legais.</p>
+                        </div>
+                    </header>
+
+                    <form class="calculator-form" data-calculator="irrf">
+                        <label for="salarioIrrf">Rendimento tributável</label>
+                        <input type="number" id="salarioIrrf" name="salarioIrrf" min="0" step="0.01" placeholder="Ex: 6500">
+
+                        <label for="inssIrrf">INSS descontado</label>
+                        <input type="number" id="inssIrrf" name="inssIrrf" min="0" step="0.01" placeholder="0 para calcular automaticamente">
+
+                        <label for="dependentesIrrf">Dependentes</label>
+                        <input type="number" id="dependentesIrrf" name="dependentesIrrf" min="0" step="1" placeholder="Ex: 1">
+
+                        <div class="deduction-builder" data-deduction-scope="irrf">
+                            <label for="tipoDeducaoIrrf">Adicionar dedução</label>
+                            <div class="deduction-row">
+                                <select id="tipoDeducaoIrrf" data-deduction-type>
+                                    <option value="Pensão alimentícia">Pensão alimentícia</option>
+                                    <option value="Previdência privada">Previdência privada</option>
+                                    <option value="FAPI">FAPI</option>
+                                    <option value="Previdência oficial complementar">Previdência oficial complementar</option>
+                                    <option value="Outra dedução legal">Outra dedução legal</option>
+                                </select>
+                                <input type="number" data-deduction-value min="0" step="0.01" placeholder="Valor">
+                                <button type="button" data-add-deduction>
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </div>
+                            <ul class="deduction-list" id="deducoesIrrf"></ul>
+                        </div>
+
+                        <button type="submit">Calcular</button>
+                    </form>
+
+                    <output class="result" id="resultadoIrrf">R$ 0</output>
+                    <div class="result-breakdown" id="detalheIrrf"></div>
+                </article>
+
+                <article class="calculator-card glass">
+                    <header class="card-header">
+                        <div class="icon green">
+                            <i class="fa-solid fa-piggy-bank"></i>
+                        </div>
+                        <div>
+                            <h3>FGTS</h3>
+                            <p>Calcula o depósito mensal sobre a remuneração informada.</p>
+                        </div>
+                    </header>
+
+                    <form class="calculator-form" data-calculator="fgts">
+                        <label for="salarioFgts">Remuneração</label>
+                        <input type="number" id="salarioFgts" name="salarioFgts" min="0" step="0.01" placeholder="Ex: 3800">
+
+                        <label for="aliquotaFgts">Alíquota (%)</label>
+                        <input type="number" id="aliquotaFgts" name="aliquotaFgts" min="0" step="0.01" value="8">
+
+                        <button type="submit">Calcular</button>
+                    </form>
+
+                    <output class="result" id="resultadoFgts">R$ 0</output>
+                </article>
+
+                <article class="calculator-card glass">
+                    <header class="card-header">
+                        <div class="icon yellow">
+                            <i class="fa-solid fa-coins"></i>
+                        </div>
+                        <div>
+                            <h3>Juros Compostos</h3>
+                            <p>Projete o montante final por taxa mensal e prazo.</p>
+                        </div>
+                    </header>
+
+                    <form class="calculator-form" data-calculator="compound">
+                        <label for="capital">Capital inicial</label>
+                        <input type="number" id="capital" name="capital" min="0" step="0.01" placeholder="Ex: 10000">
+
+                        <label for="juros">Juros ao mês (%)</label>
+                        <input type="number" id="juros" name="juros" step="0.01" placeholder="Ex: 1.5">
+
+                        <label for="tempo">Prazo em meses</label>
+                        <input type="number" id="tempo" name="tempo" min="0" step="1" placeholder="Ex: 12">
+
+                        <button type="submit">Calcular</button>
+                    </form>
+
+                    <output class="result" id="resultadoJuros">R$ 0</output>
+                </article>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
