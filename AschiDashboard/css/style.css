@@ -58,6 +58,10 @@ button {
     grid-template-columns: 92px minmax(0, 1fr);
 }
 
+.layout.sidebar-collapsed {
+    grid-template-columns: 92px minmax(0, 1fr);
+}
+
 .sidebar {
     position: sticky;
     top: 0;
@@ -87,6 +91,13 @@ button {
     font-size: 1.35rem;
     line-height: 1;
     letter-spacing: 0;
+}
+
+.logo-area span {
+    display: block;
+    margin-top: 3px;
+    color: var(--text-soft);
+    font-size: 0.78rem;
 }
 
 .toggle-btn {
@@ -176,6 +187,7 @@ button {
 }
 
 .sidebar.closed .logo-area h1,
+.sidebar.closed .logo-area span,
 .sidebar.closed .menu span,
 .sidebar.closed .profile-text {
     display: none;
@@ -208,6 +220,15 @@ button {
     margin-bottom: 8px;
     font-size: 2rem;
     line-height: 1.1;
+}
+
+.eyebrow {
+    display: inline-flex;
+    margin-bottom: 10px;
+    color: var(--blue-light);
+    font-size: 0.76rem;
+    font-weight: 800;
+    text-transform: uppercase;
 }
 
 .topbar-text p {
@@ -354,64 +375,139 @@ button {
     line-height: 1.3;
 }
 
-.chart-placeholder {
-    position: relative;
-    display: grid;
-    align-content: center;
-    justify-items: center;
+.title p {
+    margin-top: 5px;
+    color: var(--text-soft);
+    font-size: 0.84rem;
+    line-height: 1.5;
+}
+
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    padding: 0 12px;
+    color: var(--blue-light);
+    background: rgba(59, 130, 246, 0.12);
+    border: 1px solid rgba(125, 211, 252, 0.22);
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.chart {
     min-height: 342px;
     padding: 22px;
     overflow: hidden;
-    color: var(--text-soft);
     background:
         linear-gradient(rgba(125, 211, 252, 0.07) 1px, transparent 1px),
         linear-gradient(90deg, rgba(125, 211, 252, 0.07) 1px, transparent 1px),
-        linear-gradient(145deg, rgba(59, 130, 246, 0.13), rgba(255, 255, 255, 0.035));
+        linear-gradient(145deg, rgba(59, 130, 246, 0.12), rgba(255, 255, 255, 0.035));
     background-size: 34px 34px, 34px 34px, 100% 100%;
     border: 1px solid var(--border);
     border-radius: 18px;
 }
 
-.chart-placeholder::before {
-    position: absolute;
-    inset: auto 8% 18% 8%;
-    height: 42%;
-    content: "";
-    background:
-        linear-gradient(135deg, transparent 8%, rgba(125, 211, 252, 0.82) 9%, rgba(59, 130, 246, 0.82) 13%, transparent 14%),
-        linear-gradient(35deg, transparent 22%, rgba(52, 211, 153, 0.72) 23%, rgba(52, 211, 153, 0.72) 27%, transparent 28%);
-    opacity: 0.72;
-    filter: drop-shadow(0 12px 28px rgba(59, 130, 246, 0.28));
+.chart-bars {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    align-items: end;
+    gap: 18px;
 }
 
-.chart-placeholder i {
-    position: relative;
-    z-index: 1;
-    margin-bottom: 12px;
-    color: rgba(237, 246, 255, 0.72);
-    font-size: 3.2rem;
+.bar-group {
+    display: grid;
+    grid-template-rows: minmax(220px, 1fr) auto;
+    gap: 12px;
+    height: 100%;
+    min-width: 0;
 }
 
-.chart-placeholder p {
-    position: relative;
-    z-index: 1;
+.bars {
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    gap: 8px;
+    min-height: 220px;
+    padding: 0 6px;
+}
+
+.bar {
+    width: min(28px, 42%);
+    min-height: 14px;
+    border-radius: 999px 999px 8px 8px;
+    box-shadow: 0 18px 26px rgba(0, 0, 0, 0.22);
+}
+
+.bar.entry {
+    background: linear-gradient(180deg, var(--blue-light), var(--blue));
+}
+
+.bar.exit {
+    background: linear-gradient(180deg, #fb7185, #be123c);
+}
+
+.bar-group strong {
     color: var(--text-soft);
-    font-size: 0.84rem;
-    font-weight: 700;
+    font-size: 0.8rem;
     text-align: center;
 }
 
-.chart-placeholder.small {
-    min-height: 236px;
+.donut-chart {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: min(220px, 82vw);
+    aspect-ratio: 1;
+    margin: 10px auto 22px;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08), 0 22px 52px rgba(0, 0, 0, 0.28);
 }
 
-.chart-placeholder.small::before {
-    inset: 52px auto auto 50%;
-    width: 130px;
-    height: 130px;
-    background: conic-gradient(var(--blue) 0 42%, var(--blue-light) 42% 68%, var(--green) 68% 84%, rgba(255, 255, 255, 0.14) 84% 100%);
+.donut-chart::after {
+    position: absolute;
+    inset: 28%;
+    content: "";
+    background: #0f2137;
+    border: 1px solid var(--border);
     border-radius: 50%;
-    transform: translateX(-50%);
+}
+
+.donut-chart span {
+    position: relative;
+    z-index: 1;
+    max-width: 88px;
+    color: var(--text);
+    font-size: 1rem;
+    font-weight: 800;
+    line-height: 1.25;
+    text-align: center;
+}
+
+.chart-legend {
+    display: grid;
+    gap: 10px;
+    list-style: none;
+}
+
+.chart-legend li {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-soft);
+    font-size: 0.9rem;
+}
+
+.chart-legend li span {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.chart-legend strong {
+    color: var(--text);
+    font-size: 0.88rem;
 }
 
 .side-content {
@@ -455,7 +551,8 @@ button {
     margin-bottom: 0;
 }
 
-.mini-card button:hover {
+.mini-card button:hover,
+.mini-card button.active {
     transform: translateY(-2px);
     background: rgba(59, 130, 246, 0.24);
     border-color: var(--border-strong);
@@ -471,6 +568,10 @@ table {
     width: 100%;
     border-collapse: collapse;
     overflow: hidden;
+}
+
+.table-wrapper {
+    overflow-x: auto;
 }
 
 th,
@@ -502,6 +603,34 @@ tbody tr:hover {
     background: rgba(255, 255, 255, 0.045);
 }
 
+.badge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 28px;
+    padding: 0 10px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 800;
+}
+
+.positive {
+    color: var(--green);
+}
+
+.negative {
+    color: var(--red);
+}
+
+.badge.positive {
+    color: #d1fae5;
+    background: rgba(52, 211, 153, 0.14);
+}
+
+.badge.negative {
+    color: #ffe4e6;
+    background: rgba(251, 113, 133, 0.14);
+}
+
 @media (max-width: 1180px) {
     .cards {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -522,6 +651,10 @@ tbody tr:hover {
         grid-template-columns: 1fr;
     }
 
+    .layout.sidebar-collapsed {
+        grid-template-columns: 1fr;
+    }
+
     .sidebar,
     .sidebar.closed {
         position: relative;
@@ -531,6 +664,7 @@ tbody tr:hover {
     }
 
     .sidebar.closed .logo-area h1,
+    .sidebar.closed .logo-area span,
     .sidebar.closed .menu span,
     .sidebar.closed .profile-text {
         display: block;
@@ -561,6 +695,10 @@ tbody tr:hover {
     .topbar-actions select {
         width: 100%;
     }
+
+    .chart-bars {
+        gap: 10px;
+    }
 }
 
 @media (max-width: 560px) {
@@ -579,6 +717,14 @@ tbody tr:hover {
 
     .card h3 {
         font-size: 1.45rem;
+    }
+
+    .chart-bars {
+        min-width: 560px;
+    }
+
+    .main-chart {
+        overflow-x: auto;
     }
 
     th,
