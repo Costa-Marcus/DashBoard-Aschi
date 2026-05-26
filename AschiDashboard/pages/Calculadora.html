@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Calculadoras | ASCHI</title>
+
+    <link
+        rel="stylesheet"
+        href="calculadoras.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+</head>
+
+<body>
+
+    <div class="layout">
+
+        <aside
+            class="sidebar"
+            id="sidebar"
+        >
+
+            <div>
+
+                <header class="logo-area">
+
+                    <button
+                        class="toggle-btn"
+                        id="toggleBtn"
+                    >
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+
+                    <h1>ASCHI</h1>
+
+                </header>
+
+                <nav class="menu">
+
+                    <a href="#">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span>Dashboard</span>
+                    </a>
+
+                    <a
+                        href="#"
+                        class="active"
+                    >
+                        <i class="fa-solid fa-calculator"></i>
+                        <span>Calculadoras</span>
+                    </a>
+
+                </nav>
+
+            </div>
+
+        </aside>
+
+        <main class="main-content">
+
+            <header class="topbar">
+
+                <div>
+
+                    <h2>Calculadoras Financeiras</h2>
+
+                    <p>
+                        Ferramentas rápidas para
+                        cálculos contábeis e financeiros.
+                    </p>
+
+                </div>
+
+            </header>
+
+            <section class="calculators-grid">
+
+                <article class="calculator-card glass">
+
+                    <header class="card-header">
+
+                        <div class="icon blue">
+                            <i class="fa-solid fa-percent"></i>
+                        </div>
+
+                        <h3>Porcentagem</h3>
+
+                    </header>
+
+                    <div class="inputs">
+
+                        <input
+                            type="number"
+                            id="valorBase"
+                            placeholder="Valor"
+                        >
+
+                        <input
+                            type="number"
+                            id="porcentagem"
+                            placeholder="%"
+                        >
+
+                    </div>
+
+                    <button onclick="calcularPorcentagem()">
+                        Calcular
+                    </button>
+
+                    <div
+                        class="result"
+                        id="resultadoPorcentagem"
+                    >
+                        R$ 0,00
+                    </div>
+
+                </article>
+
+                <article class="calculator-card glass">
+
+                    <header class="card-header">
+
+                        <div class="icon green">
+                            <i class="fa-solid fa-sack-dollar"></i>
+                        </div>
+
+                        <h3>Lucro Líquido</h3>
+
+                    </header>
+
+                    <div class="inputs">
+
+                        <input
+                            type="number"
+                            id="receita"
+                            placeholder="Receita"
+                        >
+
+                        <input
+                            type="number"
+                            id="despesas"
+                            placeholder="Despesas"
+                        >
+
+                    </div>
+
+                    <button onclick="calcularLucro()">
+                        Calcular
+                    </button>
+
+                    <div
+                        class="result"
+                        id="resultadoLucro"
+                    >
+                        R$ 0,00
+                    </div>
+
+                </article>
+
+                <article class="calculator-card glass">
+
+                    <header class="card-header">
+
+                        <div class="icon yellow">
+                            <i class="fa-solid fa-coins"></i>
+                        </div>
+
+                        <h3>Juros Compostos</h3>
+
+                    </header>
+
+                    <div class="inputs">
+
+                        <input
+                            type="number"
+                            id="capital"
+                            placeholder="Capital Inicial"
+                        >
+
+                        <input
+                            type="number"
+                            id="juros"
+                            placeholder="Juros %"
+                        >
+
+                        <input
+                            type="number"
+                            id="tempo"
+                            placeholder="Meses"
+                        >
+
+                    </div>
+
+                    <button onclick="calcularJuros()">
+                        Calcular
+                    </button>
+
+                    <div
+                        class="result"
+                        id="resultadoJuros"
+                    >
+                        R$ 0,00
+                    </div>
+
+                </article>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <script src="calculadoras.js"></script>
+
+</body>
+
+</html>
