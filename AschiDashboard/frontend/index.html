@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASCHI Finance</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="js/client-data.js" defer></script>
+    <script src="js/api.js" defer></script>
+    <script src="js/script.js" defer></script>
+</head>
+<body>
+    <div class="layout">
+        <aside class="sidebar" id="sidebar" aria-label="Navegacao principal">
+            <div>
+                <header class="logo-area">
+                    <button class="toggle-btn" id="toggleBtn" type="button" aria-label="Alternar menu lateral" aria-expanded="true">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div>
+                        <h1>ASCHI</h1>
+                        <span>Finance</span>
+                    </div>
+                </header>
+
+                <nav class="menu">
+                    <a href="#" class="active" aria-current="page">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="#clientes">
+                        <i class="fa-solid fa-users"></i>
+                        <span>Clientes</span>
+                    </a>
+                    <a href="pages/Calculadora.html">
+                        <i class="fa-solid fa-calculator"></i>
+                        <span>Calculadoras</span>
+                    </a>
+                </nav>
+            </div>
+
+            <footer class="profile">
+                <div class="profile-icon">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <div class="profile-text">
+                    <h2>Almir</h2>
+                    <p>Administrador</p>
+                </div>
+            </footer>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <section class="topbar-text" aria-labelledby="dashboardTitle">
+                    <span class="eyebrow">Central ASCHI</span>
+                    <h2 id="dashboardTitle">Operacao e Clientes</h2>
+                    <p>Agenda de entregas, alertas de pendencias e acesso rapido aos dashboards dos clientes.</p>
+                </section>
+
+                <section class="topbar-actions" aria-label="Selecionar dashboard de cliente">
+                    <select id="homeClientSelect" aria-label="Abrir dashboard de cliente">
+                        <option value="">Selecionar cliente</option>
+                    </select>
+                </section>
+            </header>
+
+            <section class="cards" aria-label="Resumo operacional">
+                <article class="card">
+                    <div class="card-top">
+                        <p>Entregas hoje</p>
+                        <div class="icon blue">
+                            <i class="fa-solid fa-calendar-check"></i>
+                        </div>
+                    </div>
+                    <h3 id="entregasHoje">0</h3>
+                    <small>Prazos para acompanhar</small>
+                </article>
+
+                <article class="card">
+                    <div class="card-top">
+                        <p>Pendencias</p>
+                        <div class="icon red">
+                            <i class="fa-solid fa-list-check"></i>
+                        </div>
+                    </div>
+                    <h3 id="pendenciasValor">0</h3>
+                    <small>Itens aguardando acao</small>
+                </article>
+
+                <article class="card">
+                    <div class="card-top">
+                        <p>Alertas</p>
+                        <div class="icon yellow">
+                            <i class="fa-solid fa-bell"></i>
+                        </div>
+                    </div>
+                    <h3 id="alertasValor">0</h3>
+                    <small>Riscos e avisos ativos</small>
+                </article>
+
+                <article class="card">
+                    <div class="card-top">
+                        <p>Clientes</p>
+                        <div class="icon green">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+                    </div>
+                    <h3 id="clientesValor">0</h3>
+                    <small>Carteira monitorada</small>
+                </article>
+            </section>
+
+            <section class="operations-grid">
+                <section class="operations-card glass" aria-labelledby="calendarTitle">
+                    <header class="title">
+                        <div>
+                            <h3 id="calendarTitle">Calendario de Entregas</h3>
+                            <p>Datas programadas para fechamento, documentos e relatorios.</p>
+                        </div>
+                        <span class="status-pill">Maio 2026</span>
+                    </header>
+                    <div class="schedule-list" id="calendarList"></div>
+                </section>
+
+                <section class="operations-card glass" aria-labelledby="alertsTitle">
+                    <header class="title">
+                        <div>
+                            <h3 id="alertsTitle">Alertas e Pendencias</h3>
+                            <p>Itens que precisam de atencao antes das entregas.</p>
+                        </div>
+                    </header>
+                    <div class="alerts-list" id="alertsList"></div>
+                </section>
+            </section>
+
+            <section class="bottom-grid">
+                <section class="table-card glass" aria-labelledby="deliveriesTitle">
+                    <header class="title">
+                        <div>
+                            <h3 id="deliveriesTitle">Proximas Entregas</h3>
+                            <p>Fila operacional da ASCHI por cliente.</p>
+                        </div>
+                    </header>
+
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Cliente</th>
+                                    <th>Tarefa</th>
+                                    <th>Prazo</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="deliveriesTable"></tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="small-chart glass" aria-labelledby="quickTitle">
+                    <header class="title">
+                        <div>
+                            <h3 id="quickTitle">Acesso Rapido</h3>
+                            <p>Escolha um cliente e abra o dashboard financeiro dele.</p>
+                        </div>
+                    </header>
+                    <div class="quick-client-list" id="quickClientList">
+                        <a href="pages/Dashboard.html?cliente=aschi">ASCHI Finance</a>
+                        <a href="pages/Dashboard.html?cliente=norte">Norte Solar</a>
+                        <a href="pages/Dashboard.html?cliente=aurora">Aurora Clinic</a>
+                    </div>
+                </section>
+            </section>
+
+            <section class="clients-section" id="clientes" aria-labelledby="clientsTitle">
+                <header class="title">
+                    <div>
+                        <h3 id="clientsTitle">Clientes</h3>
+                        <p>A ASCHI seleciona um cliente para acessar um dashboard financeiro dedicado.</p>
+                    </div>
+                </header>
+                <div class="client-grid" id="clientGrid"></div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
