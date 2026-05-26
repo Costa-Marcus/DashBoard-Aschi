@@ -1,121 +1,26 @@
-const clients = [
-    {
-        id: "aschi",
-        nome: "ASCHI Finance",
-        segmento: "Gestao financeira",
-        descricao: "Operacao principal com foco em rotina financeira, contas e acompanhamento mensal.",
-        entradas: 128400,
-        saidas: 76900,
-        contasAPagar: 18,
-        variacaoEntradas: 8.2,
-        variacaoSaidas: -2.1,
-        recebimentos: 42,
-        fluxoMensal: [
-            { mes: "Jan", entradas: 82000, saidas: 51000 },
-            { mes: "Fev", entradas: 96000, saidas: 63000 },
-            { mes: "Mar", entradas: 104000, saidas: 69000 },
-            { mes: "Abr", entradas: 118000, saidas: 72000 },
-            { mes: "Mai", entradas: 128400, saidas: 76900 },
-            { mes: "Jun", entradas: 122000, saidas: 73500 }
-        ],
-        despesas: [
-            { categoria: "Operacional", valor: 31500, cor: "#3b82f6" },
-            { categoria: "Impostos", valor: 18800, cor: "#7dd3fc" },
-            { categoria: "Equipe", valor: 16600, cor: "#34d399" },
-            { categoria: "Servicos", valor: 10000, cor: "#fbbf24" }
-        ],
-        movimentacoes: [
-            { descricao: "Pagamento fornecedor", tipo: "Saida", valor: 4200 },
-            { descricao: "Recebimento cliente", tipo: "Entrada", valor: 12500 },
-            { descricao: "Conta de energia", tipo: "Saida", valor: 890 },
-            { descricao: "Mensalidade cliente", tipo: "Entrada", valor: 6800 },
-            { descricao: "Impostos mensais", tipo: "Saida", valor: 5300 }
-        ]
-    },
-    {
-        id: "norte",
-        nome: "Norte Solar",
-        segmento: "Energia solar",
-        descricao: "Cliente com receita concentrada em projetos, instalacoes e contratos de manutencao.",
-        entradas: 214800,
-        saidas: 142300,
-        contasAPagar: 27,
-        variacaoEntradas: 12.6,
-        variacaoSaidas: 4.8,
-        recebimentos: 31,
-        fluxoMensal: [
-            { mes: "Jan", entradas: 148000, saidas: 99000 },
-            { mes: "Fev", entradas: 156000, saidas: 108000 },
-            { mes: "Mar", entradas: 181000, saidas: 121000 },
-            { mes: "Abr", entradas: 198000, saidas: 134500 },
-            { mes: "Mai", entradas: 214800, saidas: 142300 },
-            { mes: "Jun", entradas: 203000, saidas: 137000 }
-        ],
-        despesas: [
-            { categoria: "Equipamentos", valor: 72000, cor: "#3b82f6" },
-            { categoria: "Equipe", valor: 32800, cor: "#34d399" },
-            { categoria: "Logistica", valor: 21400, cor: "#fbbf24" },
-            { categoria: "Impostos", valor: 16100, cor: "#fb7185" }
-        ],
-        movimentacoes: [
-            { descricao: "Projeto fotovoltaico", tipo: "Entrada", valor: 48500 },
-            { descricao: "Compra inversores", tipo: "Saida", valor: 29300 },
-            { descricao: "Contrato manutencao", tipo: "Entrada", valor: 9600 },
-            { descricao: "Equipe tecnica", tipo: "Saida", valor: 18400 },
-            { descricao: "Frete de placas", tipo: "Saida", valor: 7100 }
-        ]
-    },
-    {
-        id: "aurora",
-        nome: "Aurora Clinic",
-        segmento: "Saude",
-        descricao: "Cliente de servicos recorrentes com alto volume de recebimentos e custos fixos previsiveis.",
-        entradas: 96500,
-        saidas: 58400,
-        contasAPagar: 12,
-        variacaoEntradas: -1.4,
-        variacaoSaidas: -6.2,
-        recebimentos: 86,
-        fluxoMensal: [
-            { mes: "Jan", entradas: 91000, saidas: 64200 },
-            { mes: "Fev", entradas: 93800, saidas: 61700 },
-            { mes: "Mar", entradas: 98700, saidas: 60300 },
-            { mes: "Abr", entradas: 100200, saidas: 59200 },
-            { mes: "Mai", entradas: 96500, saidas: 58400 },
-            { mes: "Jun", entradas: 98200, saidas: 60100 }
-        ],
-        despesas: [
-            { categoria: "Equipe", valor: 28600, cor: "#34d399" },
-            { categoria: "Insumos", valor: 12400, cor: "#7dd3fc" },
-            { categoria: "Operacional", valor: 9800, cor: "#3b82f6" },
-            { categoria: "Impostos", valor: 7600, cor: "#fbbf24" }
-        ],
-        movimentacoes: [
-            { descricao: "Consultas particulares", tipo: "Entrada", valor: 18400 },
-            { descricao: "Folha assistencial", tipo: "Saida", valor: 22600 },
-            { descricao: "Convenio medico", tipo: "Entrada", valor: 31200 },
-            { descricao: "Materiais clinicos", tipo: "Saida", valor: 4900 },
-            { descricao: "Repasse especialistas", tipo: "Saida", valor: 8700 }
-        ]
-    }
-];
-
-let selectedClientId = localStorage.getItem("selectedClientId") || clients[0].id;
-
-if (!clients.some(client => client.id === selectedClientId)) {
-    selectedClientId = clients[0].id;
-}
-
-const formatCurrency = value => value.toLocaleString("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-    maximumFractionDigits: 0
-});
-
-const formatPercent = value => `${value > 0 ? "+" : ""}${value.toLocaleString("pt-BR")}%`;
-
-const getSelectedClient = () => {
-    return clients.find(client => client.id === selectedClientId) || clients[0];
+const operationalData = {
+    entregasHoje: 6,
+    pendencias: 9,
+    alertas: 4,
+    clientesAtivos: aschiClients.length,
+    calendario: [
+        { dia: "26", semana: "Ter", titulo: "DAS e impostos", cliente: "ASCHI Finance", status: "Hoje" },
+        { dia: "27", semana: "Qua", titulo: "Fechamento mensal", cliente: "Norte Solar", status: "Amanha" },
+        { dia: "29", semana: "Sex", titulo: "Conferencia de folha", cliente: "Aurora Clinic", status: "Pendente" },
+        { dia: "02", semana: "Ter", titulo: "Envio de relatorio", cliente: "Norte Solar", status: "Programado" }
+    ],
+    alertasPendentes: [
+        { tipo: "Documento", texto: "Norte Solar ainda nao enviou notas de compra do mes.", nivel: "Alta" },
+        { tipo: "Fiscal", texto: "Conferencia de impostos da ASCHI precisa de revisao final.", nivel: "Media" },
+        { tipo: "Folha", texto: "Aurora Clinic tem pro-labore pendente de confirmacao.", nivel: "Alta" },
+        { tipo: "Financeiro", texto: "Dois lancamentos aguardam classificacao.", nivel: "Baixa" }
+    ],
+    entregas: [
+        { cliente: "ASCHI Finance", tarefa: "Revisar impostos mensais", prazo: "Hoje", status: "Em andamento" },
+        { cliente: "Norte Solar", tarefa: "Fechamento financeiro", prazo: "27/05", status: "Pendente" },
+        { cliente: "Aurora Clinic", tarefa: "Validar folha e repasses", prazo: "29/05", status: "Pendente" },
+        { cliente: "Norte Solar", tarefa: "Enviar dashboard de resultados", prazo: "02/06", status: "Programado" }
+    ]
 };
 
 const setText = (id, value) => {
@@ -164,60 +69,10 @@ const setupSidebar = () => {
     });
 };
 
-const setupFilters = () => {
-    const currentDate = new Date();
-    const clientSelect = document.getElementById("clientSelect");
-    const monthSelect = document.getElementById("monthSelect");
-    const yearSelect = document.getElementById("yearSelect");
-    const monthNames = [
-        "Janeiro",
-        "Fevereiro",
-        "Marco",
-        "Abril",
-        "Maio",
-        "Junho",
-        "Julho",
-        "Agosto",
-        "Setembro",
-        "Outubro",
-        "Novembro",
-        "Dezembro"
-    ];
-
-    if (clientSelect) {
-        const options = clients.map(client => {
-            const option = document.createElement("option");
-
-            option.value = client.id;
-            option.textContent = client.nome;
-
-            return option;
-        });
-
-        clientSelect.replaceChildren(...options);
-        clientSelect.value = selectedClientId;
-        clientSelect.addEventListener("change", () => {
-            selectedClientId = clientSelect.value;
-            localStorage.setItem("selectedClientId", selectedClientId);
-            renderDashboard();
-        });
-    }
-
-    if (monthSelect) {
-        monthSelect.value = monthNames[currentDate.getMonth()];
-    }
-
-    if (yearSelect) {
-        yearSelect.value = String(currentDate.getFullYear());
-    }
-};
-
 const setupActiveStates = () => {
-    const menuLinks = document.querySelectorAll(".menu a");
-
-    menuLinks.forEach(link => {
+    document.querySelectorAll(".menu a").forEach(link => {
         link.addEventListener("click", () => {
-            menuLinks.forEach(item => {
+            document.querySelectorAll(".menu a").forEach(item => {
                 item.classList.remove("active");
                 item.removeAttribute("aria-current");
             });
@@ -227,137 +82,115 @@ const setupActiveStates = () => {
     });
 };
 
-const renderClientInfo = client => {
-    setText("dashboardTitle", `Painel Financeiro - ${client.nome}`);
-    setText("dashboardDescription", client.descricao);
-    setText("clienteNome", client.nome);
-    setText("clienteSegmento", client.segmento);
-    setText("clienteDescricao", client.descricao);
-};
+const setupClientRedirect = () => {
+    const clientSelect = document.getElementById("homeClientSelect");
 
-const renderIndicators = client => {
-    const lucro = client.entradas - client.saidas;
-    const margem = client.entradas > 0 ? Math.round((lucro / client.entradas) * 100) : 0;
-    const ticketMedio = client.recebimentos > 0 ? client.entradas / client.recebimentos : 0;
-
-    setText("entradaValor", formatCurrency(client.entradas));
-    setText("saidaValor", formatCurrency(client.saidas));
-    setText("lucro", formatCurrency(lucro));
-    setText("contasValor", client.contasAPagar);
-    setText("entradaVariacao", `${formatPercent(client.variacaoEntradas)} este mes`);
-    setText("saidaVariacao", `${formatPercent(client.variacaoSaidas)} este mes`);
-    setText("margemValor", `${margem}%`);
-    setText("ticketValor", formatCurrency(ticketMedio));
-    setText("recebimentosValor", client.recebimentos);
-
-    const lucroElement = document.getElementById("lucro");
-
-    if (lucroElement) {
-        lucroElement.classList.toggle("positive", lucro >= 0);
-        lucroElement.classList.toggle("negative", lucro < 0);
-    }
-};
-
-const renderCashflowChart = client => {
-    const chart = document.getElementById("cashflowChart");
-
-    if (!chart) {
+    if (!clientSelect) {
         return;
     }
 
-    const maxValue = Math.max(
-        ...client.fluxoMensal.flatMap(item => [item.entradas, item.saidas])
-    );
-    const bars = client.fluxoMensal.map(item => {
-        const entradaHeight = Math.max((item.entradas / maxValue) * 100, 8);
-        const saidaHeight = Math.max((item.saidas / maxValue) * 100, 8);
-        const group = createElement("div", "bar-group");
-        const barWrapper = createElement("div", "bars");
-        const entryBar = createElement("span", "bar entry");
-        const exitBar = createElement("span", "bar exit");
-        const label = createElement("strong", "", item.mes);
+    const options = aschiClients.map(client => {
+        const option = document.createElement("option");
 
-        entryBar.style.height = `${entradaHeight}%`;
-        exitBar.style.height = `${saidaHeight}%`;
-        barWrapper.append(entryBar, exitBar);
-        group.append(barWrapper, label);
+        option.value = client.id;
+        option.textContent = client.nome;
 
-        return group;
+        return option;
     });
 
-    chart.replaceChildren(...bars);
+    clientSelect.append(...options);
+    clientSelect.addEventListener("change", () => {
+        if (!clientSelect.value) {
+            return;
+        }
+
+        localStorage.setItem("selectedClientId", clientSelect.value);
+        window.location.href = `pages/Dashboard.html?cliente=${clientSelect.value}`;
+    });
 };
 
-const renderExpenseChart = client => {
-    const chart = document.getElementById("expenseChart");
-    const legend = document.getElementById("expenseLegend");
-    const categoryList = document.getElementById("categoryList");
+const buildStatus = text => {
+    const status = createElement("span", "status-pill", text);
 
-    if (!chart || !legend || !categoryList) {
+    status.classList.toggle("warning", text === "Pendente" || text === "Alta");
+    status.classList.toggle("neutral-pill", text === "Programado" || text === "Baixa");
+
+    return status;
+};
+
+const renderIndicators = () => {
+    setText("entregasHoje", operationalData.entregasHoje);
+    setText("pendenciasValor", operationalData.pendencias);
+    setText("alertasValor", operationalData.alertas);
+    setText("clientesValor", operationalData.clientesAtivos);
+};
+
+const renderCalendar = () => {
+    const calendar = document.getElementById("calendarList");
+
+    if (!calendar) {
         return;
     }
 
-    const total = client.despesas.reduce((sum, item) => sum + item.valor, 0);
-    let start = 0;
-    const gradient = client.despesas.map(item => {
-        const percent = total > 0 ? (item.valor / total) * 100 : 0;
-        const segment = `${item.cor} ${start}% ${start + percent}%`;
+    const items = operationalData.calendario.map(item => {
+        const row = createElement("article", "schedule-item");
+        const date = createElement("div", "schedule-date");
+        const day = createElement("strong", "", item.dia);
+        const week = createElement("span", "", item.semana);
+        const content = createElement("div", "schedule-content");
+        const title = createElement("strong", "", item.titulo);
+        const client = createElement("span", "", item.cliente);
 
-        start += percent;
+        date.append(day, week);
+        content.append(title, client);
+        row.append(date, content, buildStatus(item.status));
 
-        return segment;
-    }).join(", ");
-    const totalLabel = createElement("span", "", formatCurrency(total));
-    const legendItems = client.despesas.map(item => {
-        const listItem = document.createElement("li");
-        const color = document.createElement("span");
-        const label = document.createTextNode(item.categoria);
-        const value = createElement("strong", "", formatCurrency(item.valor));
-
-        color.style.background = item.cor;
-        listItem.append(color, label, value);
-
-        return listItem;
-    });
-    const categoryButtons = client.despesas.map((item, index) => {
-        const button = document.createElement("button");
-
-        button.type = "button";
-        button.textContent = item.categoria;
-        button.classList.toggle("active", index === 0);
-        button.addEventListener("click", () => {
-            categoryList.querySelectorAll("button").forEach(categoryButton => {
-                categoryButton.classList.remove("active");
-            });
-            button.classList.add("active");
-        });
-
-        return button;
+        return row;
     });
 
-    chart.style.background = total > 0 ? `conic-gradient(${gradient})` : "var(--glass)";
-    chart.replaceChildren(totalLabel);
-    legend.replaceChildren(...legendItems);
-    categoryList.replaceChildren(...categoryButtons);
+    calendar.replaceChildren(...items);
 };
 
-const renderTable = client => {
-    const tableBody = document.getElementById("tableBody");
+const renderAlerts = () => {
+    const alerts = document.getElementById("alertsList");
+
+    if (!alerts) {
+        return;
+    }
+
+    const items = operationalData.alertasPendentes.map(item => {
+        const row = createElement("article", "alert-item");
+        const icon = createElement("div", "alert-icon");
+        const content = createElement("div", "alert-content");
+        const type = createElement("strong", "", item.tipo);
+        const text = createElement("span", "", item.texto);
+
+        icon.append(createElement("i", "fa-solid fa-triangle-exclamation"));
+        content.append(type, text);
+        row.append(icon, content, buildStatus(item.nivel));
+
+        return row;
+    });
+
+    alerts.replaceChildren(...items);
+};
+
+const renderDeliveries = () => {
+    const tableBody = document.getElementById("deliveriesTable");
 
     if (!tableBody) {
         return;
     }
 
-    const rows = client.movimentacoes.map(item => {
-        const typeClass = item.tipo === "Entrada" ? "positive" : "negative";
+    const rows = operationalData.entregas.map(item => {
         const row = document.createElement("tr");
-        const description = createElement("td", "", item.descricao);
-        const type = document.createElement("td");
-        const badge = createElement("span", `badge ${typeClass}`, item.tipo);
-        const value = createElement("td", typeClass, formatCurrency(item.valor));
+        const client = createElement("td", "", item.cliente);
+        const task = createElement("td", "", item.tarefa);
+        const deadline = createElement("td", "", item.prazo);
+        const status = document.createElement("td");
 
-        type.append(badge);
-        row.append(description, type, value);
+        status.append(buildStatus(item.status));
+        row.append(client, task, deadline, status);
 
         return row;
     });
@@ -365,19 +198,46 @@ const renderTable = client => {
     tableBody.replaceChildren(...rows);
 };
 
-const renderDashboard = () => {
-    const client = getSelectedClient();
+const renderClients = () => {
+    const clientGrid = document.getElementById("clientGrid");
 
-    renderClientInfo(client);
-    renderIndicators(client);
-    renderCashflowChart(client);
-    renderExpenseChart(client);
-    renderTable(client);
+    if (!clientGrid) {
+        return;
+    }
+
+    const cards = aschiClients.map(client => {
+        const card = createElement("article", "client-card glass");
+        const header = createElement("div", "client-card-header");
+        const icon = createElement("div", "icon blue");
+        const text = createElement("div");
+        const title = createElement("h3", "", client.nome);
+        const segment = createElement("span", "", client.segmento);
+        const description = createElement("p", "", client.descricao);
+        const link = document.createElement("a");
+
+        icon.append(createElement("i", "fa-solid fa-building"));
+        text.append(title, segment);
+        header.append(icon, text);
+        link.href = `pages/Dashboard.html?cliente=${client.id}`;
+        link.textContent = "Abrir dashboard";
+        link.addEventListener("click", () => {
+            localStorage.setItem("selectedClientId", client.id);
+        });
+        card.append(header, description, link);
+
+        return card;
+    });
+
+    clientGrid.replaceChildren(...cards);
 };
 
 document.addEventListener("DOMContentLoaded", () => {
     setupSidebar();
-    setupFilters();
     setupActiveStates();
-    renderDashboard();
+    setupClientRedirect();
+    renderIndicators();
+    renderCalendar();
+    renderAlerts();
+    renderDeliveries();
+    renderClients();
 });
