@@ -26,7 +26,9 @@ router.post("/movimentacoes", (req, res) => {
         type: requireString(req.body, "tipo"),
         amount: requireNumber(req.body, "valor"),
         occurredAt: requireString(req.body, "data"),
-        category: String(req.body.categoria || "").trim() || null
+        category: String(req.body.categoria || "").trim() || null,
+        source: "manual",
+        externalId: null
     };
 
     if (!["Entrada", "Saida"].includes(transaction.type)) {
@@ -44,7 +46,9 @@ router.put("/movimentacoes/:id", (req, res) => {
         type: requireString(req.body, "tipo"),
         amount: requireNumber(req.body, "valor"),
         occurredAt: requireString(req.body, "data"),
-        category: String(req.body.categoria || "").trim() || null
+        category: String(req.body.categoria || "").trim() || null,
+        source: "manual",
+        externalId: null
     };
 
     if (!["Entrada", "Saida"].includes(transaction.type)) {

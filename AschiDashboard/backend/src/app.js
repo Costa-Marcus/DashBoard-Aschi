@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const clientRoutes = require("./routes/clientRoutes");
 const financeRoutes = require("./routes/financeRoutes");
+const integrationRoutes = require("./routes/integrationRoutes");
 const createSchema = require("./database/schema");
 const errorHandler = require("./middleware/errorHandler");
 
@@ -24,11 +25,12 @@ app.use((req, res, next) => {
 });
 
 app.get("/api/health", (req, res) => {
-    res.json({ status: "ok", service: "aschi-finance-api" });
+    res.json({ status: "ok", service: "aschi-finance-server" });
 });
 
 app.use("/api/clientes", clientRoutes);
 app.use("/api", financeRoutes);
+app.use("/api/integracoes", integrationRoutes);
 app.use(express.static(path.join(__dirname, "..", "..", "frontend")));
 app.use(errorHandler);
 

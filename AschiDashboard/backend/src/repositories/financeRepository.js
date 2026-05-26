@@ -2,7 +2,7 @@ const db = require("../database/connection");
 
 const listTransactions = clientId => {
     return db.prepare(`
-        SELECT id, client_id, description, type, amount, occurred_at, category
+        SELECT id, client_id, description, type, amount, occurred_at, category, source, external_id
         FROM transactions
         WHERE client_id = ?
         ORDER BY occurred_at DESC, id DESC
@@ -13,14 +13,16 @@ const listTransactions = clientId => {
         tipo: row.type,
         valor: row.amount,
         data: row.occurred_at,
-        categoria: row.category
+        categoria: row.category,
+        origem: row.source,
+        idExterno: row.external_id
     }));
 };
 
 const createTransaction = transaction => {
     const result = db.prepare(`
-        INSERT INTO transactions (client_id, description, type, amount, occurred_at, category)
-        VALUES (@clientId, @description, @type, @amount, @occurredAt, @category)
+        INSERT INTO transactions (client_id, description, type, amount, occurred_at, category, source, external_id)
+        VALUES (@clientId, @description, @type, @amount, @occurredAt, @category, @source, @externalId)
     `).run(transaction);
 
     return getTransactionById(result.lastInsertRowid);
@@ -28,7 +30,7 @@ const createTransaction = transaction => {
 
 const getTransactionById = id => {
     const row = db.prepare(`
-        SELECT id, client_id, description, type, amount, occurred_at, category
+        SELECT id, client_id, description, type, amount, occurred_at, category, source, external_id
         FROM transactions
         WHERE id = ?
     `).get(id);
@@ -40,7 +42,9 @@ const getTransactionById = id => {
         tipo: row.type,
         valor: row.amount,
         data: row.occurred_at,
-        categoria: row.category
+        categoria: row.category,
+        origem: row.source,
+        idExterno: row.external_id
     } : null;
 };
 
@@ -52,7 +56,9 @@ const updateTransaction = (id, transaction) => {
             type = @type,
             amount = @amount,
             occurred_at = @occurredAt,
-            category = @category
+            category = @category,
+            source = @source,
+            external_id = @externalId
         WHERE id = @id
     `).run({ id, ...transaction });
 
@@ -61,6 +67,33 @@ const updateTransaction = (id, transaction) => {
 
 const deleteTransaction = id => {
     const result = db.prepare("DELETE FROM transactions WHERE id = ?").run(id);
+
+    return result.changes > 0;
+};
+
+const createExternalTransaction = transaction => {
+    const result = db.prepare(`
+        INSERT OR IGNORE INTO transactions (
+            client_id,
+            description,
+            type,
+            amount,
+            occurred_at,
+            category,
+            source,
+            external_id
+        )
+        VALUES (
+            @clientId,
+            @description,
+            @type,
+            @amount,
+            @occurredAt,
+            @category,
+            @source,
+            @externalId
+        )
+    `).run(transaction);
 
     return result.changes > 0;
 };
@@ -174,6 +207,7 @@ const getDashboard = clientId => {
 
 module.exports = {
     createPayable,
+    createExternalTransaction,
     createTransaction,
     deletePayable,
     deleteTransaction,

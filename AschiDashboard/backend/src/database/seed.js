@@ -18,15 +18,18 @@ const seed = () => {
         VALUES (?, ?, ?, ?)
     `);
     const insertTransaction = db.prepare(`
-        INSERT INTO transactions (client_id, description, type, amount, occurred_at, category)
-        VALUES (?, ?, ?, ?, ?, ?)
+        INSERT INTO transactions (client_id, description, type, amount, occurred_at, category, source)
+        VALUES (?, ?, ?, ?, ?, ?, 'seed')
     `);
     const insertPayable = db.prepare(`
         INSERT INTO accounts_payable (client_id, description, amount, due_date, status)
         VALUES (?, ?, ?, ?, ?)
     `);
 
-    const runSeed = db.transaction(() => {
+    const runSeed = () => {
+        db.exec("BEGIN TRANSACTION;");
+
+        try {
         db.exec(`
             DELETE FROM accounts_payable;
             DELETE FROM transactions;
@@ -59,7 +62,12 @@ const seed = () => {
                 insertPayable.run(client.id, description, amount, dueDate, status);
             });
         });
-    });
+            db.exec("COMMIT;");
+        } catch (error) {
+            db.exec("ROLLBACK;");
+            throw error;
+        }
+    };
 
     runSeed();
 };
