@@ -1,40 +1,27 @@
-const financialData = {
-    entradas: 128400,
-    saidas: 76900,
-    contasAPagar: 18,
-    variacaoEntradas: 8.2,
-    variacaoSaidas: -2.1,
-    recebimentos: 42,
-    fluxoMensal: [
-        { mes: "Jan", entradas: 82000, saidas: 51000 },
-        { mes: "Fev", entradas: 96000, saidas: 63000 },
-        { mes: "Mar", entradas: 104000, saidas: 69000 },
-        { mes: "Abr", entradas: 118000, saidas: 72000 },
-        { mes: "Mai", entradas: 128400, saidas: 76900 },
-        { mes: "Jun", entradas: 122000, saidas: 73500 }
+const operationalData = {
+    entregasHoje: 6,
+    pendencias: 9,
+    alertas: 4,
+    clientesAtivos: aschiClients.length,
+    calendario: [
+        { dia: "26", semana: "Ter", titulo: "DAS e impostos", cliente: "ASCHI Finance", status: "Hoje" },
+        { dia: "27", semana: "Qua", titulo: "Fechamento mensal", cliente: "Norte Solar", status: "Amanha" },
+        { dia: "29", semana: "Sex", titulo: "Conferencia de folha", cliente: "Aurora Clinic", status: "Pendente" },
+        { dia: "02", semana: "Ter", titulo: "Envio de relatorio", cliente: "Norte Solar", status: "Programado" }
     ],
-    despesas: [
-        { categoria: "Operacional", valor: 31500, cor: "#3b82f6" },
-        { categoria: "Impostos", valor: 18800, cor: "#7dd3fc" },
-        { categoria: "Equipe", valor: 16600, cor: "#34d399" },
-        { categoria: "Serviços", valor: 10000, cor: "#fbbf24" }
+    alertasPendentes: [
+        { tipo: "Documento", texto: "Norte Solar ainda nao enviou notas de compra do mes.", nivel: "Alta" },
+        { tipo: "Fiscal", texto: "Conferencia de impostos da ASCHI precisa de revisao final.", nivel: "Media" },
+        { tipo: "Folha", texto: "Aurora Clinic tem pro-labore pendente de confirmacao.", nivel: "Alta" },
+        { tipo: "Financeiro", texto: "Dois lancamentos aguardam classificacao.", nivel: "Baixa" }
     ],
-    movimentacoes: [
-        { descricao: "Pagamento fornecedor", tipo: "Saída", valor: 4200 },
-        { descricao: "Recebimento cliente", tipo: "Entrada", valor: 12500 },
-        { descricao: "Conta de energia", tipo: "Saída", valor: 890 },
-        { descricao: "Mensalidade cliente", tipo: "Entrada", valor: 6800 },
-        { descricao: "Impostos mensais", tipo: "Saída", valor: 5300 }
+    entregas: [
+        { cliente: "ASCHI Finance", tarefa: "Revisar impostos mensais", prazo: "Hoje", status: "Em andamento" },
+        { cliente: "Norte Solar", tarefa: "Fechamento financeiro", prazo: "27/05", status: "Pendente" },
+        { cliente: "Aurora Clinic", tarefa: "Validar folha e repasses", prazo: "29/05", status: "Pendente" },
+        { cliente: "Norte Solar", tarefa: "Enviar dashboard de resultados", prazo: "02/06", status: "Programado" }
     ]
 };
-
-const formatCurrency = value => value.toLocaleString("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-    maximumFractionDigits: 0
-});
-
-const formatPercent = value => `${value > 0 ? "+" : ""}${value.toLocaleString("pt-BR")}%`;
 
 const setText = (id, value) => {
     const element = document.getElementById(id);
@@ -42,6 +29,20 @@ const setText = (id, value) => {
     if (element) {
         element.textContent = value;
     }
+};
+
+const createElement = (tagName, className, text) => {
+    const element = document.createElement(tagName);
+
+    if (className) {
+        element.className = className;
+    }
+
+    if (text !== undefined) {
+        element.textContent = text;
+    }
+
+    return element;
 };
 
 const setupSidebar = () => {
@@ -68,167 +69,175 @@ const setupSidebar = () => {
     });
 };
 
-const setupFilters = () => {
-    const currentDate = new Date();
-    const monthSelect = document.getElementById("monthSelect");
-    const yearSelect = document.getElementById("yearSelect");
-    const monthNames = [
-        "Janeiro",
-        "Fevereiro",
-        "Março",
-        "Abril",
-        "Maio",
-        "Junho",
-        "Julho",
-        "Agosto",
-        "Setembro",
-        "Outubro",
-        "Novembro",
-        "Dezembro"
-    ];
-
-    if (monthSelect) {
-        monthSelect.value = monthNames[currentDate.getMonth()];
-    }
-
-    if (yearSelect) {
-        yearSelect.value = String(currentDate.getFullYear());
-    }
+const setupActiveStates = () => {
+    document.querySelectorAll(".menu a").forEach(link => {
+        link.addEventListener("click", () => {
+            document.querySelectorAll(".menu a").forEach(item => {
+                item.classList.remove("active");
+                item.removeAttribute("aria-current");
+            });
+            link.classList.add("active");
+            link.setAttribute("aria-current", "page");
+        });
+    });
 };
 
-const setupActiveStates = () => {
-    const menuLinks = document.querySelectorAll(".menu a");
-    const categoryButtons = document.querySelectorAll(".mini-card button");
+const setupClientRedirect = () => {
+    const clientSelect = document.getElementById("homeClientSelect");
 
-    menuLinks.forEach(link => {
-        link.addEventListener("click", event => {
-            if (link.getAttribute("href") === "#") {
-                event.preventDefault();
-            }
+    if (!clientSelect) {
+        return;
+    }
 
-            menuLinks.forEach(item => item.classList.remove("active"));
-            link.classList.add("active");
-        });
+    const options = aschiClients.map(client => {
+        const option = document.createElement("option");
+
+        option.value = client.id;
+        option.textContent = client.nome;
+
+        return option;
     });
 
-    categoryButtons.forEach((button, index) => {
-        button.classList.toggle("active", index === 0);
+    clientSelect.append(...options);
+    clientSelect.addEventListener("change", () => {
+        if (!clientSelect.value) {
+            return;
+        }
 
-        button.addEventListener("click", () => {
-            categoryButtons.forEach(item => item.classList.remove("active"));
-            button.classList.add("active");
-        });
+        localStorage.setItem("selectedClientId", clientSelect.value);
+        window.location.href = `pages/Dashboard.html?cliente=${clientSelect.value}`;
     });
+};
+
+const buildStatus = text => {
+    const status = createElement("span", "status-pill", text);
+
+    status.classList.toggle("warning", text === "Pendente" || text === "Alta");
+    status.classList.toggle("neutral-pill", text === "Programado" || text === "Baixa");
+
+    return status;
 };
 
 const renderIndicators = () => {
-    const lucro = financialData.entradas - financialData.saidas;
-    const margem = Math.round((lucro / financialData.entradas) * 100);
-    const ticketMedio = financialData.entradas / financialData.recebimentos;
-
-    setText("entradaValor", formatCurrency(financialData.entradas));
-    setText("saidaValor", formatCurrency(financialData.saidas));
-    setText("lucro", formatCurrency(lucro));
-    setText("contasValor", financialData.contasAPagar);
-    setText("entradaVariacao", `${formatPercent(financialData.variacaoEntradas)} este mês`);
-    setText("saidaVariacao", `${formatPercent(financialData.variacaoSaidas)} este mês`);
-    setText("margemValor", `${margem}%`);
-    setText("ticketValor", formatCurrency(ticketMedio));
-    setText("recebimentosValor", financialData.recebimentos);
-
-    const lucroElement = document.getElementById("lucro");
-
-    if (lucroElement) {
-        lucroElement.classList.toggle("positive", lucro >= 0);
-        lucroElement.classList.toggle("negative", lucro < 0);
-    }
+    setText("entregasHoje", operationalData.entregasHoje);
+    setText("pendenciasValor", operationalData.pendencias);
+    setText("alertasValor", operationalData.alertas);
+    setText("clientesValor", operationalData.clientesAtivos);
 };
 
-const renderCashflowChart = () => {
-    const chart = document.getElementById("cashflowChart");
+const renderCalendar = () => {
+    const calendar = document.getElementById("calendarList");
 
-    if (!chart) {
+    if (!calendar) {
         return;
     }
 
-    const maxValue = Math.max(
-        ...financialData.fluxoMensal.flatMap(item => [item.entradas, item.saidas])
-    );
+    const items = operationalData.calendario.map(item => {
+        const row = createElement("article", "schedule-item");
+        const date = createElement("div", "schedule-date");
+        const day = createElement("strong", "", item.dia);
+        const week = createElement("span", "", item.semana);
+        const content = createElement("div", "schedule-content");
+        const title = createElement("strong", "", item.titulo);
+        const client = createElement("span", "", item.cliente);
 
-    chart.innerHTML = financialData.fluxoMensal.map(item => {
-        const entradaHeight = Math.max((item.entradas / maxValue) * 100, 8);
-        const saidaHeight = Math.max((item.saidas / maxValue) * 100, 8);
+        date.append(day, week);
+        content.append(title, client);
+        row.append(date, content, buildStatus(item.status));
 
-        return `
-            <div class="bar-group">
-                <div class="bars">
-                    <span class="bar entry" style="height: ${entradaHeight}%"></span>
-                    <span class="bar exit" style="height: ${saidaHeight}%"></span>
-                </div>
-                <strong>${item.mes}</strong>
-            </div>
-        `;
-    }).join("");
+        return row;
+    });
+
+    calendar.replaceChildren(...items);
 };
 
-const renderExpenseChart = () => {
-    const chart = document.getElementById("expenseChart");
-    const legend = document.getElementById("expenseLegend");
+const renderAlerts = () => {
+    const alerts = document.getElementById("alertsList");
 
-    if (!chart || !legend) {
+    if (!alerts) {
         return;
     }
 
-    const total = financialData.despesas.reduce((sum, item) => sum + item.valor, 0);
-    let start = 0;
+    const items = operationalData.alertasPendentes.map(item => {
+        const row = createElement("article", "alert-item");
+        const icon = createElement("div", "alert-icon");
+        const content = createElement("div", "alert-content");
+        const type = createElement("strong", "", item.tipo);
+        const text = createElement("span", "", item.texto);
 
-    const gradient = financialData.despesas.map(item => {
-        const percent = (item.valor / total) * 100;
-        const segment = `${item.cor} ${start}% ${start + percent}%`;
+        icon.append(createElement("i", "fa-solid fa-triangle-exclamation"));
+        content.append(type, text);
+        row.append(icon, content, buildStatus(item.nivel));
 
-        start += percent;
+        return row;
+    });
 
-        return segment;
-    }).join(", ");
-
-    chart.style.background = `conic-gradient(${gradient})`;
-    chart.innerHTML = `<span>${formatCurrency(total)}</span>`;
-
-    legend.innerHTML = financialData.despesas.map(item => `
-        <li>
-            <span style="background: ${item.cor}"></span>
-            ${item.categoria}
-            <strong>${formatCurrency(item.valor)}</strong>
-        </li>
-    `).join("");
+    alerts.replaceChildren(...items);
 };
 
-const renderTable = () => {
-    const tableBody = document.getElementById("tableBody");
+const renderDeliveries = () => {
+    const tableBody = document.getElementById("deliveriesTable");
 
     if (!tableBody) {
         return;
     }
 
-    tableBody.innerHTML = financialData.movimentacoes.map(item => {
-        const typeClass = item.tipo === "Entrada" ? "positive" : "negative";
+    const rows = operationalData.entregas.map(item => {
+        const row = document.createElement("tr");
+        const client = createElement("td", "", item.cliente);
+        const task = createElement("td", "", item.tarefa);
+        const deadline = createElement("td", "", item.prazo);
+        const status = document.createElement("td");
 
-        return `
-            <tr>
-                <td>${item.descricao}</td>
-                <td><span class="badge ${typeClass}">${item.tipo}</span></td>
-                <td class="${typeClass}">${formatCurrency(item.valor)}</td>
-            </tr>
-        `;
-    }).join("");
+        status.append(buildStatus(item.status));
+        row.append(client, task, deadline, status);
+
+        return row;
+    });
+
+    tableBody.replaceChildren(...rows);
+};
+
+const renderClients = () => {
+    const clientGrid = document.getElementById("clientGrid");
+
+    if (!clientGrid) {
+        return;
+    }
+
+    const cards = aschiClients.map(client => {
+        const card = createElement("article", "client-card glass");
+        const header = createElement("div", "client-card-header");
+        const icon = createElement("div", "icon blue");
+        const text = createElement("div");
+        const title = createElement("h3", "", client.nome);
+        const segment = createElement("span", "", client.segmento);
+        const description = createElement("p", "", client.descricao);
+        const link = document.createElement("a");
+
+        icon.append(createElement("i", "fa-solid fa-building"));
+        text.append(title, segment);
+        header.append(icon, text);
+        link.href = `pages/Dashboard.html?cliente=${client.id}`;
+        link.textContent = "Abrir dashboard";
+        link.addEventListener("click", () => {
+            localStorage.setItem("selectedClientId", client.id);
+        });
+        card.append(header, description, link);
+
+        return card;
+    });
+
+    clientGrid.replaceChildren(...cards);
 };
 
 document.addEventListener("DOMContentLoaded", () => {
     setupSidebar();
-    setupFilters();
     setupActiveStates();
+    setupClientRedirect();
     renderIndicators();
-    renderCashflowChart();
-    renderExpenseChart();
-    renderTable();
+    renderCalendar();
+    renderAlerts();
+    renderDeliveries();
+    renderClients();
 });

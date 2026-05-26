@@ -6,11 +6,12 @@
     <title>ASCHI Finance</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="js/client-data.js" defer></script>
     <script src="js/script.js" defer></script>
 </head>
 <body>
     <div class="layout">
-        <aside class="sidebar" id="sidebar" aria-label="Navegação principal">
+        <aside class="sidebar" id="sidebar" aria-label="Navegacao principal">
             <div>
                 <header class="logo-area">
                     <button class="toggle-btn" id="toggleBtn" type="button" aria-label="Alternar menu lateral" aria-expanded="true">
@@ -23,25 +24,13 @@
                 </header>
 
                 <nav class="menu">
-                    <a href="#" class="active">
+                    <a href="#" class="active" aria-current="page">
                         <i class="fa-solid fa-chart-line"></i>
                         <span>Dashboard</span>
                     </a>
-                    <a href="#">
-                        <i class="fa-solid fa-arrow-trend-up"></i>
-                        <span>Entradas</span>
-                    </a>
-                    <a href="#">
-                        <i class="fa-solid fa-arrow-trend-down"></i>
-                        <span>Saídas</span>
-                    </a>
-                    <a href="#">
-                        <i class="fa-solid fa-file-invoice-dollar"></i>
-                        <span>Contas</span>
-                    </a>
-                    <a href="#">
-                        <i class="fa-solid fa-chart-pie"></i>
-                        <span>Relatórios</span>
+                    <a href="#clientes">
+                        <i class="fa-solid fa-users"></i>
+                        <span>Clientes</span>
                     </a>
                     <a href="pages/Calculadora.html">
                         <i class="fa-solid fa-calculator"></i>
@@ -64,132 +53,93 @@
         <main class="main-content">
             <header class="topbar">
                 <section class="topbar-text" aria-labelledby="dashboardTitle">
-                    <span class="eyebrow">Visão executiva</span>
-                    <h2 id="dashboardTitle">Painel Financeiro</h2>
-                    <p>Controle mensal de entradas, saídas, contas e desempenho operacional da empresa.</p>
+                    <span class="eyebrow">Central ASCHI</span>
+                    <h2 id="dashboardTitle">Operacao e Clientes</h2>
+                    <p>Agenda de entregas, alertas de pendencias e acesso rapido aos dashboards dos clientes.</p>
                 </section>
 
-                <section class="topbar-actions" aria-label="Filtros do painel">
-                    <select id="yearSelect" aria-label="Selecionar ano">
-                        <option>2026</option>
-                        <option>2025</option>
-                        <option>2024</option>
-                    </select>
-                    <select id="monthSelect" aria-label="Selecionar mês">
-                        <option>Janeiro</option>
-                        <option>Fevereiro</option>
-                        <option>Março</option>
-                        <option>Abril</option>
-                        <option>Maio</option>
-                        <option>Junho</option>
-                        <option>Julho</option>
-                        <option>Agosto</option>
-                        <option>Setembro</option>
-                        <option>Outubro</option>
-                        <option>Novembro</option>
-                        <option>Dezembro</option>
+                <section class="topbar-actions" aria-label="Selecionar dashboard de cliente">
+                    <select id="homeClientSelect" aria-label="Abrir dashboard de cliente">
+                        <option value="">Selecionar cliente</option>
                     </select>
                 </section>
             </header>
 
-            <section class="cards" aria-label="Indicadores financeiros">
+            <section class="cards" aria-label="Resumo operacional">
                 <article class="card">
                     <div class="card-top">
-                        <p>Entradas</p>
+                        <p>Entregas hoje</p>
                         <div class="icon blue">
-                            <i class="fa-solid fa-arrow-trend-up"></i>
+                            <i class="fa-solid fa-calendar-check"></i>
                         </div>
                     </div>
-                    <h3 id="entradaValor">R$ 0</h3>
-                    <small id="entradaVariacao">Atualizando...</small>
+                    <h3 id="entregasHoje">0</h3>
+                    <small>Prazos para acompanhar</small>
                 </article>
 
                 <article class="card">
                     <div class="card-top">
-                        <p>Saídas</p>
+                        <p>Pendencias</p>
                         <div class="icon red">
-                            <i class="fa-solid fa-arrow-trend-down"></i>
+                            <i class="fa-solid fa-list-check"></i>
                         </div>
                     </div>
-                    <h3 id="saidaValor">R$ 0</h3>
-                    <small id="saidaVariacao">Atualizando...</small>
+                    <h3 id="pendenciasValor">0</h3>
+                    <small>Itens aguardando acao</small>
                 </article>
 
                 <article class="card">
                     <div class="card-top">
-                        <p>Lucro Líquido</p>
-                        <div class="icon green">
-                            <i class="fa-solid fa-sack-dollar"></i>
-                        </div>
-                    </div>
-                    <h3 id="lucro">R$ 0</h3>
-                    <small>Resultado operacional</small>
-                </article>
-
-                <article class="card">
-                    <div class="card-top">
-                        <p>Contas a Pagar</p>
+                        <p>Alertas</p>
                         <div class="icon yellow">
-                            <i class="fa-solid fa-clock"></i>
+                            <i class="fa-solid fa-bell"></i>
                         </div>
                     </div>
-                    <h3 id="contasValor">0</h3>
-                    <small>Próximos vencimentos</small>
+                    <h3 id="alertasValor">0</h3>
+                    <small>Riscos e avisos ativos</small>
+                </article>
+
+                <article class="card">
+                    <div class="card-top">
+                        <p>Clientes</p>
+                        <div class="icon green">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+                    </div>
+                    <h3 id="clientesValor">0</h3>
+                    <small>Carteira monitorada</small>
                 </article>
             </section>
 
-            <section class="grid-area">
-                <section class="main-chart glass" aria-labelledby="fluxoTitle">
+            <section class="operations-grid">
+                <section class="operations-card glass" aria-labelledby="calendarTitle">
                     <header class="title">
                         <div>
-                            <h3 id="fluxoTitle">Fluxo Financeiro Mensal</h3>
-                            <p>Comparativo entre entradas e saídas por mês</p>
+                            <h3 id="calendarTitle">Calendario de Entregas</h3>
+                            <p>Datas programadas para fechamento, documentos e relatorios.</p>
                         </div>
-                        <span class="status-pill">Ano fiscal</span>
+                        <span class="status-pill">Maio 2026</span>
                     </header>
-
-                    <div class="chart chart-bars" id="cashflowChart" aria-label="Gráfico de fluxo financeiro"></div>
+                    <div class="schedule-list" id="calendarList"></div>
                 </section>
 
-                <aside class="side-content">
-                    <section class="mini-card glass" aria-labelledby="resumoTitle">
-                        <header class="title">
-                            <h3 id="resumoTitle">Resumo</h3>
-                        </header>
-                        <div class="mini-info">
-                            <div>
-                                <span>Margem</span>
-                                <strong id="margemValor">0%</strong>
-                            </div>
-                            <div>
-                                <span>Ticket médio</span>
-                                <strong id="ticketValor">R$ 0</strong>
-                            </div>
-                            <div>
-                                <span>Recebimentos</span>
-                                <strong id="recebimentosValor">0</strong>
-                            </div>
+                <section class="operations-card glass" aria-labelledby="alertsTitle">
+                    <header class="title">
+                        <div>
+                            <h3 id="alertsTitle">Alertas e Pendencias</h3>
+                            <p>Itens que precisam de atencao antes das entregas.</p>
                         </div>
-                    </section>
-
-                    <section class="mini-card glass" aria-labelledby="categoriasTitle">
-                        <header class="title">
-                            <h3 id="categoriasTitle">Categorias</h3>
-                        </header>
-                        <button type="button">Impostos</button>
-                        <button type="button">Operacional</button>
-                        <button type="button">Clientes</button>
-                        <button type="button">Funcionários</button>
-                    </section>
-                </aside>
+                    </header>
+                    <div class="alerts-list" id="alertsList"></div>
+                </section>
             </section>
 
             <section class="bottom-grid">
-                <section class="table-card glass" aria-labelledby="movimentacoesTitle">
+                <section class="table-card glass" aria-labelledby="deliveriesTitle">
                     <header class="title">
                         <div>
-                            <h3 id="movimentacoesTitle">Últimas Movimentações</h3>
-                            <p>Lançamentos financeiros recentes</p>
+                            <h3 id="deliveriesTitle">Proximas Entregas</h3>
+                            <p>Fila operacional da ASCHI por cliente.</p>
                         </div>
                     </header>
 
@@ -197,27 +147,40 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Descrição</th>
-                                    <th>Tipo</th>
-                                    <th>Valor</th>
+                                    <th>Cliente</th>
+                                    <th>Tarefa</th>
+                                    <th>Prazo</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
-                            <tbody id="tableBody"></tbody>
+                            <tbody id="deliveriesTable"></tbody>
                         </table>
                     </div>
                 </section>
 
-                <section class="small-chart glass" aria-labelledby="despesasTitle">
+                <section class="small-chart glass" aria-labelledby="quickTitle">
                     <header class="title">
                         <div>
-                            <h3 id="despesasTitle">Despesas</h3>
-                            <p>Distribuição por categoria</p>
+                            <h3 id="quickTitle">Acesso Rapido</h3>
+                            <p>Escolha um cliente e abra o dashboard financeiro dele.</p>
                         </div>
                     </header>
-
-                    <div class="donut-chart" id="expenseChart" aria-label="Gráfico de despesas"></div>
-                    <ul class="chart-legend" id="expenseLegend"></ul>
+                    <div class="quick-client-list" id="quickClientList">
+                        <a href="pages/Dashboard.html?cliente=aschi">ASCHI Finance</a>
+                        <a href="pages/Dashboard.html?cliente=norte">Norte Solar</a>
+                        <a href="pages/Dashboard.html?cliente=aurora">Aurora Clinic</a>
+                    </div>
                 </section>
+            </section>
+
+            <section class="clients-section" id="clientes" aria-labelledby="clientsTitle">
+                <header class="title">
+                    <div>
+                        <h3 id="clientsTitle">Clientes</h3>
+                        <p>A ASCHI seleciona um cliente para acessar um dashboard financeiro dedicado.</p>
+                    </div>
+                </header>
+                <div class="client-grid" id="clientGrid"></div>
             </section>
         </main>
     </div>

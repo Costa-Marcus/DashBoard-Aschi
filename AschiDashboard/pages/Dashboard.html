@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard do Cliente | ASCHI Finance</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="../js/client-data.js" defer></script>
+    <script src="../js/dashboard.js" defer></script>
+</head>
+<body>
+    <div class="layout">
+        <aside class="sidebar" id="sidebar" aria-label="Navegacao principal">
+            <div>
+                <header class="logo-area">
+                    <button class="toggle-btn" id="toggleBtn" type="button" aria-label="Alternar menu lateral" aria-expanded="true">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div>
+                        <h1>ASCHI</h1>
+                        <span>Finance</span>
+                    </div>
+                </header>
+
+                <nav class="menu">
+                    <a href="../index.html">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="../index.html#clientes">
+                        <i class="fa-solid fa-users"></i>
+                        <span>Clientes</span>
+                    </a>
+                    <a href="Calculadora.html">
+                        <i class="fa-solid fa-calculator"></i>
+                        <span>Calculadoras</span>
+                    </a>
+                </nav>
+            </div>
+
+            <footer class="profile">
+                <div class="profile-icon">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <div class="profile-text">
+                    <h2>Almir</h2>
+                    <p>Administrador</p>
+                </div>
+            </footer>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <section class="topbar-text" aria-labelledby="dashboardTitle">
+                    <span class="eyebrow">Visao do cliente</span>
+                    <h2 id="dashboardTitle">Dashboard do Cliente</h2>
+                    <p id="dashboardDescription">Selecione um cliente para visualizar seus indicadores financeiros.</p>
+                </section>
+
+                <section class="topbar-actions" aria-label="Filtros do painel">
+                    <select id="clientSelect" aria-label="Selecionar cliente"></select>
+                    <select id="yearSelect" aria-label="Selecionar ano">
+                        <option>2026</option>
+                        <option>2025</option>
+                        <option>2024</option>
+                    </select>
+                    <select id="monthSelect" aria-label="Selecionar mes">
+                        <option>Janeiro</option>
+                        <option>Fevereiro</option>
+                        <option>Marco</option>
+                        <option>Abril</option>
+                        <option>Maio</option>
+                        <option>Junho</option>
+                        <option>Julho</option>
+                        <option>Agosto</option>
+                        <option>Setembro</option>
+                        <option>Outubro</option>
+                        <option>Novembro</option>
+                        <option>Dezembro</option>
+                    </select>
+                </section>
+            </header>
+
+            <section class="cards" aria-label="Indicadores financeiros">
+                <article class="card">
+                    <div class="card-top">
+                        <p>Entradas</p>
+                        <div class="icon blue">
+                            <i class="fa-solid fa-arrow-trend-up"></i>
+                        </div>
+                    </div>
+                    <h3 id="entradaValor">R$ 0</h3>
+                    <small id="entradaVariacao">Atualizando...</small>
+                </article>
+
+                <article class="card">
+                    <div class="card-top">
+                        <p>Saidas</p>
+                        <div class="icon red">
+                            <i class="fa-solid fa-arrow-trend-down"></i>
+                        </div>
+                    </div>
+                    <h3 id="saidaValor">R$ 0</h3>
+                    <small id="saidaVariacao">Atualizando...</small>
+                </article>
+
+                <article class="card">
+                    <div class="card-top">
+                        <p>Lucro Liquido</p>
+                        <div class="icon green">
+                            <i class="fa-solid fa-sack-dollar"></i>
+                        </div>
+                    </div>
+                    <h3 id="lucro">R$ 0</h3>
+                    <small>Resultado operacional</small>
+                </article>
+
+                <article class="card">
+                    <div class="card-top">
+                        <p>Contas a Pagar</p>
+                        <div class="icon yellow">
+                            <i class="fa-solid fa-clock"></i>
+                        </div>
+                    </div>
+                    <h3 id="contasValor">0</h3>
+                    <small>Proximos vencimentos</small>
+                </article>
+            </section>
+
+            <section class="grid-area">
+                <section class="main-chart glass" aria-labelledby="fluxoTitle">
+                    <header class="title">
+                        <div>
+                            <h3 id="fluxoTitle">Fluxo Financeiro Mensal</h3>
+                            <p>Comparativo entre entradas e saidas por mes</p>
+                        </div>
+                        <span class="status-pill">Ano fiscal</span>
+                    </header>
+
+                    <div class="chart chart-bars" id="cashflowChart" aria-label="Grafico de fluxo financeiro"></div>
+                </section>
+
+                <aside class="side-content">
+                    <section class="mini-card glass" aria-labelledby="clienteTitle">
+                        <header class="title">
+                            <h3 id="clienteTitle">Cliente</h3>
+                        </header>
+                        <div class="client-panel">
+                            <strong id="clienteNome">Cliente</strong>
+                            <span id="clienteSegmento">Segmento</span>
+                            <p id="clienteDescricao">Resumo do cliente selecionado.</p>
+                        </div>
+                    </section>
+
+                    <section class="mini-card glass" aria-labelledby="resumoTitle">
+                        <header class="title">
+                            <h3 id="resumoTitle">Resumo</h3>
+                        </header>
+                        <div class="mini-info">
+                            <div>
+                                <span>Margem</span>
+                                <strong id="margemValor">0%</strong>
+                            </div>
+                            <div>
+                                <span>Ticket medio</span>
+                                <strong id="ticketValor">R$ 0</strong>
+                            </div>
+                            <div>
+                                <span>Recebimentos</span>
+                                <strong id="recebimentosValor">0</strong>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="mini-card glass" aria-labelledby="categoriasTitle">
+                        <header class="title">
+                            <h3 id="categoriasTitle">Categorias</h3>
+                        </header>
+                        <div id="categoryList"></div>
+                    </section>
+                </aside>
+            </section>
+
+            <section class="bottom-grid">
+                <section class="table-card glass" aria-labelledby="movimentacoesTitle">
+                    <header class="title">
+                        <div>
+                            <h3 id="movimentacoesTitle">Ultimas Movimentacoes</h3>
+                            <p>Lancamentos financeiros recentes</p>
+                        </div>
+                    </header>
+
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Descricao</th>
+                                    <th>Tipo</th>
+                                    <th>Valor</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody"></tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="small-chart glass" aria-labelledby="despesasTitle">
+                    <header class="title">
+                        <div>
+                            <h3 id="despesasTitle">Despesas</h3>
+                            <p>Distribuicao por categoria</p>
+                        </div>
+                    </header>
+
+                    <div class="donut-chart" id="expenseChart" aria-label="Grafico de despesas"></div>
+                    <ul class="chart-legend" id="expenseLegend"></ul>
+                </section>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
