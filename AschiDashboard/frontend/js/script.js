@@ -23,6 +23,8 @@ const operationalData = {
     ]
 };
 
+let clients = aschiClients;
+
 const setText = (id, value) => {
     const element = document.getElementById(id);
 
@@ -89,7 +91,7 @@ const setupClientRedirect = () => {
         return;
     }
 
-    const options = aschiClients.map(client => {
+    const options = clients.map(client => {
         const option = document.createElement("option");
 
         option.value = client.id;
@@ -122,7 +124,7 @@ const renderIndicators = () => {
     setText("entregasHoje", operationalData.entregasHoje);
     setText("pendenciasValor", operationalData.pendencias);
     setText("alertasValor", operationalData.alertas);
-    setText("clientesValor", operationalData.clientesAtivos);
+    setText("clientesValor", clients.length);
 };
 
 const renderCalendar = () => {
@@ -205,7 +207,7 @@ const renderClients = () => {
         return;
     }
 
-    const cards = aschiClients.map(client => {
+    const cards = clients.map(client => {
         const card = createElement("article", "client-card glass");
         const header = createElement("div", "client-card-header");
         const icon = createElement("div", "icon blue");
@@ -231,7 +233,8 @@ const renderClients = () => {
     clientGrid.replaceChildren(...cards);
 };
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+    clients = await window.aschiApi.getClients(aschiClients);
     setupSidebar();
     setupActiveStates();
     setupClientRedirect();

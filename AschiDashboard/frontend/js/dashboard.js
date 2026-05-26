@@ -1,4 +1,4 @@
-const clients = aschiClients;
+let clients = aschiClients;
 const params = new URLSearchParams(window.location.search);
 let selectedClientId = params.get("cliente") || localStorage.getItem("selectedClientId") || clients[0].id;
 
@@ -94,11 +94,11 @@ const setupFilters = () => {
 
         clientSelect.replaceChildren(...options);
         clientSelect.value = selectedClientId;
-        clientSelect.addEventListener("change", () => {
+        clientSelect.addEventListener("change", async () => {
             selectedClientId = clientSelect.value;
             localStorage.setItem("selectedClientId", selectedClientId);
             window.history.replaceState({}, "", `Dashboard.html?cliente=${selectedClientId}`);
-            renderDashboard();
+            await renderDashboard();
         });
     }
 
@@ -260,8 +260,9 @@ const renderTable = client => {
     tableBody.replaceChildren(...rows);
 };
 
-const renderDashboard = () => {
-    const client = getSelectedClient();
+const renderDashboard = async () => {
+    const fallbackClient = getSelectedClient();
+    const client = await window.aschiApi.getClientDashboard(fallbackClient.id, clients);
 
     localStorage.setItem("selectedClientId", client.id);
     renderClientInfo(client);
@@ -271,9 +272,15 @@ const renderDashboard = () => {
     renderTable(client);
 };
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+    clients = await window.aschiApi.getClients(aschiClients);
+
+    if (!clients.some(client => client.id === selectedClientId)) {
+        selectedClientId = clients[0].id;
+    }
+
     setupSidebar();
     setupFilters();
     setupActiveStates();
-    renderDashboard();
+    await renderDashboard();
 });

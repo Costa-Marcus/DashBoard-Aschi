@@ -1,0 +1,16 @@
+{
+  "name": "aschi-finance-api",
+  "version": "0.1.0",
+  "description": "API do ASCHI Finance para clientes, dashboards e movimentacoes financeiras.",
+  "main": "src/server.js",
+  "type": "commonjs",
+  "scripts": {
+    "dev": "node src/server.js",
+    "start": "node src/server.js",
+    "seed": "node src/database/seed.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.8.1",
+    "express": "^4.21.2"
+  }
+}
