@@ -1,32 +1,110 @@
-const financialData = {
-    entradas: 128400,
-    saidas: 76900,
-    contasAPagar: 18,
-    variacaoEntradas: 8.2,
-    variacaoSaidas: -2.1,
-    recebimentos: 42,
-    fluxoMensal: [
-        { mes: "Jan", entradas: 82000, saidas: 51000 },
-        { mes: "Fev", entradas: 96000, saidas: 63000 },
-        { mes: "Mar", entradas: 104000, saidas: 69000 },
-        { mes: "Abr", entradas: 118000, saidas: 72000 },
-        { mes: "Mai", entradas: 128400, saidas: 76900 },
-        { mes: "Jun", entradas: 122000, saidas: 73500 }
-    ],
-    despesas: [
-        { categoria: "Operacional", valor: 31500, cor: "#3b82f6" },
-        { categoria: "Impostos", valor: 18800, cor: "#7dd3fc" },
-        { categoria: "Equipe", valor: 16600, cor: "#34d399" },
-        { categoria: "Serviços", valor: 10000, cor: "#fbbf24" }
-    ],
-    movimentacoes: [
-        { descricao: "Pagamento fornecedor", tipo: "Saída", valor: 4200 },
-        { descricao: "Recebimento cliente", tipo: "Entrada", valor: 12500 },
-        { descricao: "Conta de energia", tipo: "Saída", valor: 890 },
-        { descricao: "Mensalidade cliente", tipo: "Entrada", valor: 6800 },
-        { descricao: "Impostos mensais", tipo: "Saída", valor: 5300 }
-    ]
-};
+const clients = [
+    {
+        id: "aschi",
+        nome: "ASCHI Finance",
+        segmento: "Gestao financeira",
+        descricao: "Operacao principal com foco em rotina financeira, contas e acompanhamento mensal.",
+        entradas: 128400,
+        saidas: 76900,
+        contasAPagar: 18,
+        variacaoEntradas: 8.2,
+        variacaoSaidas: -2.1,
+        recebimentos: 42,
+        fluxoMensal: [
+            { mes: "Jan", entradas: 82000, saidas: 51000 },
+            { mes: "Fev", entradas: 96000, saidas: 63000 },
+            { mes: "Mar", entradas: 104000, saidas: 69000 },
+            { mes: "Abr", entradas: 118000, saidas: 72000 },
+            { mes: "Mai", entradas: 128400, saidas: 76900 },
+            { mes: "Jun", entradas: 122000, saidas: 73500 }
+        ],
+        despesas: [
+            { categoria: "Operacional", valor: 31500, cor: "#3b82f6" },
+            { categoria: "Impostos", valor: 18800, cor: "#7dd3fc" },
+            { categoria: "Equipe", valor: 16600, cor: "#34d399" },
+            { categoria: "Servicos", valor: 10000, cor: "#fbbf24" }
+        ],
+        movimentacoes: [
+            { descricao: "Pagamento fornecedor", tipo: "Saida", valor: 4200 },
+            { descricao: "Recebimento cliente", tipo: "Entrada", valor: 12500 },
+            { descricao: "Conta de energia", tipo: "Saida", valor: 890 },
+            { descricao: "Mensalidade cliente", tipo: "Entrada", valor: 6800 },
+            { descricao: "Impostos mensais", tipo: "Saida", valor: 5300 }
+        ]
+    },
+    {
+        id: "norte",
+        nome: "Norte Solar",
+        segmento: "Energia solar",
+        descricao: "Cliente com receita concentrada em projetos, instalacoes e contratos de manutencao.",
+        entradas: 214800,
+        saidas: 142300,
+        contasAPagar: 27,
+        variacaoEntradas: 12.6,
+        variacaoSaidas: 4.8,
+        recebimentos: 31,
+        fluxoMensal: [
+            { mes: "Jan", entradas: 148000, saidas: 99000 },
+            { mes: "Fev", entradas: 156000, saidas: 108000 },
+            { mes: "Mar", entradas: 181000, saidas: 121000 },
+            { mes: "Abr", entradas: 198000, saidas: 134500 },
+            { mes: "Mai", entradas: 214800, saidas: 142300 },
+            { mes: "Jun", entradas: 203000, saidas: 137000 }
+        ],
+        despesas: [
+            { categoria: "Equipamentos", valor: 72000, cor: "#3b82f6" },
+            { categoria: "Equipe", valor: 32800, cor: "#34d399" },
+            { categoria: "Logistica", valor: 21400, cor: "#fbbf24" },
+            { categoria: "Impostos", valor: 16100, cor: "#fb7185" }
+        ],
+        movimentacoes: [
+            { descricao: "Projeto fotovoltaico", tipo: "Entrada", valor: 48500 },
+            { descricao: "Compra inversores", tipo: "Saida", valor: 29300 },
+            { descricao: "Contrato manutencao", tipo: "Entrada", valor: 9600 },
+            { descricao: "Equipe tecnica", tipo: "Saida", valor: 18400 },
+            { descricao: "Frete de placas", tipo: "Saida", valor: 7100 }
+        ]
+    },
+    {
+        id: "aurora",
+        nome: "Aurora Clinic",
+        segmento: "Saude",
+        descricao: "Cliente de servicos recorrentes com alto volume de recebimentos e custos fixos previsiveis.",
+        entradas: 96500,
+        saidas: 58400,
+        contasAPagar: 12,
+        variacaoEntradas: -1.4,
+        variacaoSaidas: -6.2,
+        recebimentos: 86,
+        fluxoMensal: [
+            { mes: "Jan", entradas: 91000, saidas: 64200 },
+            { mes: "Fev", entradas: 93800, saidas: 61700 },
+            { mes: "Mar", entradas: 98700, saidas: 60300 },
+            { mes: "Abr", entradas: 100200, saidas: 59200 },
+            { mes: "Mai", entradas: 96500, saidas: 58400 },
+            { mes: "Jun", entradas: 98200, saidas: 60100 }
+        ],
+        despesas: [
+            { categoria: "Equipe", valor: 28600, cor: "#34d399" },
+            { categoria: "Insumos", valor: 12400, cor: "#7dd3fc" },
+            { categoria: "Operacional", valor: 9800, cor: "#3b82f6" },
+            { categoria: "Impostos", valor: 7600, cor: "#fbbf24" }
+        ],
+        movimentacoes: [
+            { descricao: "Consultas particulares", tipo: "Entrada", valor: 18400 },
+            { descricao: "Folha assistencial", tipo: "Saida", valor: 22600 },
+            { descricao: "Convenio medico", tipo: "Entrada", valor: 31200 },
+            { descricao: "Materiais clinicos", tipo: "Saida", valor: 4900 },
+            { descricao: "Repasse especialistas", tipo: "Saida", valor: 8700 }
+        ]
+    }
+];
+
+let selectedClientId = localStorage.getItem("selectedClientId") || clients[0].id;
+
+if (!clients.some(client => client.id === selectedClientId)) {
+    selectedClientId = clients[0].id;
+}
 
 const formatCurrency = value => value.toLocaleString("pt-BR", {
     style: "currency",
@@ -36,12 +114,30 @@ const formatCurrency = value => value.toLocaleString("pt-BR", {
 
 const formatPercent = value => `${value > 0 ? "+" : ""}${value.toLocaleString("pt-BR")}%`;
 
+const getSelectedClient = () => {
+    return clients.find(client => client.id === selectedClientId) || clients[0];
+};
+
 const setText = (id, value) => {
     const element = document.getElementById(id);
 
     if (element) {
         element.textContent = value;
     }
+};
+
+const createElement = (tagName, className, text) => {
+    const element = document.createElement(tagName);
+
+    if (className) {
+        element.className = className;
+    }
+
+    if (text !== undefined) {
+        element.textContent = text;
+    }
+
+    return element;
 };
 
 const setupSidebar = () => {
@@ -70,12 +166,13 @@ const setupSidebar = () => {
 
 const setupFilters = () => {
     const currentDate = new Date();
+    const clientSelect = document.getElementById("clientSelect");
     const monthSelect = document.getElementById("monthSelect");
     const yearSelect = document.getElementById("yearSelect");
     const monthNames = [
         "Janeiro",
         "Fevereiro",
-        "Março",
+        "Marco",
         "Abril",
         "Maio",
         "Junho",
@@ -86,6 +183,25 @@ const setupFilters = () => {
         "Novembro",
         "Dezembro"
     ];
+
+    if (clientSelect) {
+        const options = clients.map(client => {
+            const option = document.createElement("option");
+
+            option.value = client.id;
+            option.textContent = client.nome;
+
+            return option;
+        });
+
+        clientSelect.replaceChildren(...options);
+        clientSelect.value = selectedClientId;
+        clientSelect.addEventListener("change", () => {
+            selectedClientId = clientSelect.value;
+            localStorage.setItem("selectedClientId", selectedClientId);
+            renderDashboard();
+        });
+    }
 
     if (monthSelect) {
         monthSelect.value = monthNames[currentDate.getMonth()];
@@ -98,43 +214,41 @@ const setupFilters = () => {
 
 const setupActiveStates = () => {
     const menuLinks = document.querySelectorAll(".menu a");
-    const categoryButtons = document.querySelectorAll(".mini-card button");
 
     menuLinks.forEach(link => {
-        link.addEventListener("click", event => {
-            if (link.getAttribute("href") === "#") {
-                event.preventDefault();
-            }
-
-            menuLinks.forEach(item => item.classList.remove("active"));
+        link.addEventListener("click", () => {
+            menuLinks.forEach(item => {
+                item.classList.remove("active");
+                item.removeAttribute("aria-current");
+            });
             link.classList.add("active");
-        });
-    });
-
-    categoryButtons.forEach((button, index) => {
-        button.classList.toggle("active", index === 0);
-
-        button.addEventListener("click", () => {
-            categoryButtons.forEach(item => item.classList.remove("active"));
-            button.classList.add("active");
+            link.setAttribute("aria-current", "page");
         });
     });
 };
 
-const renderIndicators = () => {
-    const lucro = financialData.entradas - financialData.saidas;
-    const margem = Math.round((lucro / financialData.entradas) * 100);
-    const ticketMedio = financialData.entradas / financialData.recebimentos;
+const renderClientInfo = client => {
+    setText("dashboardTitle", `Painel Financeiro - ${client.nome}`);
+    setText("dashboardDescription", client.descricao);
+    setText("clienteNome", client.nome);
+    setText("clienteSegmento", client.segmento);
+    setText("clienteDescricao", client.descricao);
+};
 
-    setText("entradaValor", formatCurrency(financialData.entradas));
-    setText("saidaValor", formatCurrency(financialData.saidas));
+const renderIndicators = client => {
+    const lucro = client.entradas - client.saidas;
+    const margem = client.entradas > 0 ? Math.round((lucro / client.entradas) * 100) : 0;
+    const ticketMedio = client.recebimentos > 0 ? client.entradas / client.recebimentos : 0;
+
+    setText("entradaValor", formatCurrency(client.entradas));
+    setText("saidaValor", formatCurrency(client.saidas));
     setText("lucro", formatCurrency(lucro));
-    setText("contasValor", financialData.contasAPagar);
-    setText("entradaVariacao", `${formatPercent(financialData.variacaoEntradas)} este mês`);
-    setText("saidaVariacao", `${formatPercent(financialData.variacaoSaidas)} este mês`);
+    setText("contasValor", client.contasAPagar);
+    setText("entradaVariacao", `${formatPercent(client.variacaoEntradas)} este mes`);
+    setText("saidaVariacao", `${formatPercent(client.variacaoSaidas)} este mes`);
     setText("margemValor", `${margem}%`);
     setText("ticketValor", formatCurrency(ticketMedio));
-    setText("recebimentosValor", financialData.recebimentos);
+    setText("recebimentosValor", client.recebimentos);
 
     const lucroElement = document.getElementById("lucro");
 
@@ -144,7 +258,7 @@ const renderIndicators = () => {
     }
 };
 
-const renderCashflowChart = () => {
+const renderCashflowChart = client => {
     const chart = document.getElementById("cashflowChart");
 
     if (!chart) {
@@ -152,83 +266,118 @@ const renderCashflowChart = () => {
     }
 
     const maxValue = Math.max(
-        ...financialData.fluxoMensal.flatMap(item => [item.entradas, item.saidas])
+        ...client.fluxoMensal.flatMap(item => [item.entradas, item.saidas])
     );
-
-    chart.innerHTML = financialData.fluxoMensal.map(item => {
+    const bars = client.fluxoMensal.map(item => {
         const entradaHeight = Math.max((item.entradas / maxValue) * 100, 8);
         const saidaHeight = Math.max((item.saidas / maxValue) * 100, 8);
+        const group = createElement("div", "bar-group");
+        const barWrapper = createElement("div", "bars");
+        const entryBar = createElement("span", "bar entry");
+        const exitBar = createElement("span", "bar exit");
+        const label = createElement("strong", "", item.mes);
 
-        return `
-            <div class="bar-group">
-                <div class="bars">
-                    <span class="bar entry" style="height: ${entradaHeight}%"></span>
-                    <span class="bar exit" style="height: ${saidaHeight}%"></span>
-                </div>
-                <strong>${item.mes}</strong>
-            </div>
-        `;
-    }).join("");
+        entryBar.style.height = `${entradaHeight}%`;
+        exitBar.style.height = `${saidaHeight}%`;
+        barWrapper.append(entryBar, exitBar);
+        group.append(barWrapper, label);
+
+        return group;
+    });
+
+    chart.replaceChildren(...bars);
 };
 
-const renderExpenseChart = () => {
+const renderExpenseChart = client => {
     const chart = document.getElementById("expenseChart");
     const legend = document.getElementById("expenseLegend");
+    const categoryList = document.getElementById("categoryList");
 
-    if (!chart || !legend) {
+    if (!chart || !legend || !categoryList) {
         return;
     }
 
-    const total = financialData.despesas.reduce((sum, item) => sum + item.valor, 0);
+    const total = client.despesas.reduce((sum, item) => sum + item.valor, 0);
     let start = 0;
-
-    const gradient = financialData.despesas.map(item => {
-        const percent = (item.valor / total) * 100;
+    const gradient = client.despesas.map(item => {
+        const percent = total > 0 ? (item.valor / total) * 100 : 0;
         const segment = `${item.cor} ${start}% ${start + percent}%`;
 
         start += percent;
 
         return segment;
     }).join(", ");
+    const totalLabel = createElement("span", "", formatCurrency(total));
+    const legendItems = client.despesas.map(item => {
+        const listItem = document.createElement("li");
+        const color = document.createElement("span");
+        const label = document.createTextNode(item.categoria);
+        const value = createElement("strong", "", formatCurrency(item.valor));
 
-    chart.style.background = `conic-gradient(${gradient})`;
-    chart.innerHTML = `<span>${formatCurrency(total)}</span>`;
+        color.style.background = item.cor;
+        listItem.append(color, label, value);
 
-    legend.innerHTML = financialData.despesas.map(item => `
-        <li>
-            <span style="background: ${item.cor}"></span>
-            ${item.categoria}
-            <strong>${formatCurrency(item.valor)}</strong>
-        </li>
-    `).join("");
+        return listItem;
+    });
+    const categoryButtons = client.despesas.map((item, index) => {
+        const button = document.createElement("button");
+
+        button.type = "button";
+        button.textContent = item.categoria;
+        button.classList.toggle("active", index === 0);
+        button.addEventListener("click", () => {
+            categoryList.querySelectorAll("button").forEach(categoryButton => {
+                categoryButton.classList.remove("active");
+            });
+            button.classList.add("active");
+        });
+
+        return button;
+    });
+
+    chart.style.background = total > 0 ? `conic-gradient(${gradient})` : "var(--glass)";
+    chart.replaceChildren(totalLabel);
+    legend.replaceChildren(...legendItems);
+    categoryList.replaceChildren(...categoryButtons);
 };
 
-const renderTable = () => {
+const renderTable = client => {
     const tableBody = document.getElementById("tableBody");
 
     if (!tableBody) {
         return;
     }
 
-    tableBody.innerHTML = financialData.movimentacoes.map(item => {
+    const rows = client.movimentacoes.map(item => {
         const typeClass = item.tipo === "Entrada" ? "positive" : "negative";
+        const row = document.createElement("tr");
+        const description = createElement("td", "", item.descricao);
+        const type = document.createElement("td");
+        const badge = createElement("span", `badge ${typeClass}`, item.tipo);
+        const value = createElement("td", typeClass, formatCurrency(item.valor));
 
-        return `
-            <tr>
-                <td>${item.descricao}</td>
-                <td><span class="badge ${typeClass}">${item.tipo}</span></td>
-                <td class="${typeClass}">${formatCurrency(item.valor)}</td>
-            </tr>
-        `;
-    }).join("");
+        type.append(badge);
+        row.append(description, type, value);
+
+        return row;
+    });
+
+    tableBody.replaceChildren(...rows);
+};
+
+const renderDashboard = () => {
+    const client = getSelectedClient();
+
+    renderClientInfo(client);
+    renderIndicators(client);
+    renderCashflowChart(client);
+    renderExpenseChart(client);
+    renderTable(client);
 };
 
 document.addEventListener("DOMContentLoaded", () => {
     setupSidebar();
     setupFilters();
     setupActiveStates();
-    renderIndicators();
-    renderCashflowChart();
-    renderExpenseChart();
-    renderTable();
+    renderDashboard();
 });

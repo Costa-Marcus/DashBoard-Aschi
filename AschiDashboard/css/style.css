@@ -239,7 +239,9 @@ button {
 
 .topbar-actions {
     display: flex;
+    flex-wrap: wrap;
     gap: 12px;
+    justify-content: flex-end;
 }
 
 .topbar-actions select,
@@ -257,6 +259,10 @@ button {
     padding: 13px 16px;
     outline: none;
     border-radius: 14px;
+}
+
+#clientSelect {
+    min-width: 190px;
 }
 
 .topbar-actions select:focus {
@@ -518,6 +524,32 @@ button {
 .mini-info {
     display: grid;
     gap: 12px;
+}
+
+.client-panel {
+    display: grid;
+    gap: 8px;
+}
+
+.client-panel strong {
+    font-size: 1.1rem;
+}
+
+.client-panel span {
+    width: fit-content;
+    padding: 6px 10px;
+    color: var(--blue-light);
+    background: rgba(59, 130, 246, 0.14);
+    border: 1px solid rgba(125, 211, 252, 0.2);
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 800;
+}
+
+.client-panel p {
+    color: var(--text-soft);
+    font-size: 0.9rem;
+    line-height: 1.55;
 }
 
 .mini-info div {

@@ -4,6 +4,8 @@ const formatCurrency = value => value.toLocaleString("pt-BR", {
     maximumFractionDigits: 2
 });
 
+const roundCurrency = value => Math.round((value + Number.EPSILON) * 100) / 100;
+
 const taxTables = {
     inss2026: [
         { limit: 1621.00, rate: 0.075 },
@@ -30,20 +32,47 @@ const deductionState = {
 
 const getNumber = id => {
     const field = document.getElementById(id);
-    return Number(field?.value || 0);
+    const rawValue = String(field?.value || "").trim();
+
+    if (!rawValue) {
+        return 0;
+    }
+
+    const normalizedValue = rawValue.includes(",")
+        ? rawValue.replace(/\./g, "").replace(",", ".")
+        : rawValue;
+    const value = Number(normalizedValue);
+
+    return Number.isNaN(value) ? 0 : value;
 };
 
-const setResult = (id, value) => {
+const setElementText = (element, value) => {
+    const isValueField = element instanceof HTMLInputElement
+        || element instanceof HTMLTextAreaElement
+        || element instanceof HTMLSelectElement;
+
+    if (isValueField) {
+        element.value = value;
+        return;
+    }
+
+    element.textContent = value;
+};
+
+const setResultState = (element, state) => {
+    element.classList.toggle("negative", state === "negative");
+    element.classList.toggle("neutral", state === "neutral");
+};
+
+const setCurrencyResult = (id, value) => {
     const output = document.getElementById(id);
 
     if (!output) {
         return;
     }
 
-    output.value = formatCurrency(value);
-    output.textContent = formatCurrency(value);
-    output.classList.toggle("negative", value < 0);
-    output.classList.toggle("neutral", false);
+    setElementText(output, formatCurrency(value));
+    setResultState(output, value < 0 ? "negative" : "default");
 };
 
 const setTextResult = (id, value, state = "default") => {
@@ -53,10 +82,8 @@ const setTextResult = (id, value, state = "default") => {
         return;
     }
 
-    output.value = value;
-    output.textContent = value;
-    output.classList.toggle("negative", state === "negative");
-    output.classList.toggle("neutral", state === "neutral");
+    setElementText(output, value);
+    setResultState(output, state);
 };
 
 const setBreakdown = (id, items) => {
@@ -66,61 +93,82 @@ const setBreakdown = (id, items) => {
         return;
     }
 
-    element.innerHTML = items.map(item => `
-        <div>
-            <span>${item.label}</span>
-            <strong>${item.value}</strong>
-        </div>
-    `).join("");
+    const rows = items.map(item => {
+        const row = document.createElement("div");
+        const label = document.createElement("span");
+        const value = document.createElement("strong");
+
+        label.textContent = item.label;
+        value.textContent = item.value;
+        row.append(label, value);
+
+        return row;
+    });
+
+    element.replaceChildren(...rows);
 };
 
 const calculateInss = salary => {
+    const inssLimit = taxTables.inss2026[taxTables.inss2026.length - 1].limit;
+    const taxableSalary = Math.min(salary, inssLimit);
     let previousLimit = 0;
     let contribution = 0;
 
     taxTables.inss2026.forEach(range => {
-        if (salary > previousLimit) {
-            const taxableAmount = Math.min(salary, range.limit) - previousLimit;
-            contribution += taxableAmount * range.rate;
+        if (taxableSalary > previousLimit) {
+            const taxableAmount = Math.min(taxableSalary, range.limit) - previousLimit;
+            contribution = roundCurrency(contribution + roundCurrency(taxableAmount * range.rate));
         }
 
         previousLimit = range.limit;
     });
 
-    return contribution;
+    return roundCurrency(contribution);
 };
 
-const calculateIrrfReduction = taxableIncome => {
+const calculateIrrfReduction = (taxableIncome, tax) => {
     if (taxableIncome <= 5000) {
-        return Infinity;
+        return tax;
     }
 
     if (taxableIncome <= 7350) {
-        return Math.max(978.62 - (0.133145 * taxableIncome), 0);
+        return Math.min(roundCurrency(Math.max(978.62 - (0.133145 * taxableIncome), 0)), tax);
     }
 
     return 0;
 };
 
-const calculateIrrf = ({ income, inss, dependents, deductions }) => {
-    const dependentDeduction = dependents * taxTables.dependentDeduction;
-    const legalDeductions = inss + dependentDeduction + deductions;
-    const legalBase = Math.max(income - legalDeductions, 0);
-    const simplifiedBase = Math.max(income - taxTables.simplifiedDeduction, 0);
-    const useSimplified = simplifiedBase < legalBase;
-    const base = useSimplified ? simplifiedBase : legalBase;
+const calculateIrrfForBase = (base, income) => {
     const range = taxTables.irrf2026.find(item => base <= item.limit);
-    const rawTax = Math.max((base * range.rate) - range.deduction, 0);
-    const reduction = calculateIrrfReduction(income);
-    const tax = Math.max(rawTax - reduction, 0);
+    const rawTax = roundCurrency(Math.max((base * range.rate) - range.deduction, 0));
+    const reduction = calculateIrrfReduction(income, rawTax);
+    const tax = roundCurrency(Math.max(rawTax - reduction, 0));
 
     return {
         base,
+        rawTax,
+        reduction,
+        tax
+    };
+};
+
+const calculateIrrf = ({ income, inss, dependents, deductions }) => {
+    const dependentDeduction = roundCurrency(dependents * taxTables.dependentDeduction);
+    const legalDeductions = roundCurrency(inss + dependentDeduction + deductions);
+    const legalBase = roundCurrency(Math.max(income - legalDeductions, 0));
+    const simplifiedBase = roundCurrency(Math.max(income - taxTables.simplifiedDeduction, 0));
+    const legalResult = calculateIrrfForBase(legalBase, income);
+    const simplifiedResult = calculateIrrfForBase(simplifiedBase, income);
+    const useSimplified = simplifiedResult.tax < legalResult.tax;
+    const selectedResult = useSimplified ? simplifiedResult : legalResult;
+
+    return {
+        base: selectedResult.base,
         dependentDeduction,
         legalDeductions,
-        rawTax,
-        reduction: Number.isFinite(reduction) ? Math.min(reduction, rawTax) : rawTax,
-        tax,
+        rawTax: selectedResult.rawTax,
+        reduction: selectedResult.reduction,
+        tax: selectedResult.tax,
         useSimplified
     };
 };
@@ -161,15 +209,27 @@ const renderDeductions = scope => {
         return;
     }
 
-    list.innerHTML = deductionState[scope].map((item, index) => `
-        <li>
-            <span>${item.type}</span>
-            <strong>${formatCurrency(item.value)}</strong>
-            <button type="button" data-remove-deduction="${index}" aria-label="Remover dedução">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-        </li>
-    `).join("");
+    const items = deductionState[scope].map((item, index) => {
+        const listItem = document.createElement("li");
+        const type = document.createElement("span");
+        const value = document.createElement("strong");
+        const button = document.createElement("button");
+        const icon = document.createElement("i");
+
+        type.textContent = item.type;
+        value.textContent = formatCurrency(item.value);
+        button.type = "button";
+        button.dataset.removeDeduction = String(index);
+        button.setAttribute("aria-label", "Remover deducao");
+        icon.classList.add("fa-solid", "fa-xmark");
+
+        button.append(icon);
+        listItem.append(type, value, button);
+
+        return listItem;
+    });
+
+    list.replaceChildren(...items);
 };
 
 const setupDeductions = () => {
@@ -181,7 +241,7 @@ const setupDeductions = () => {
         const list = builder.querySelector(".deduction-list");
 
         addButton?.addEventListener("click", () => {
-            const value = Number(valueField?.value || 0);
+            const value = getNumber(valueField?.id);
 
             if (value <= 0 || !typeField) {
                 return;
@@ -189,7 +249,7 @@ const setupDeductions = () => {
 
             deductionState[scope].push({
                 type: typeField.value,
-                value
+                value: roundCurrency(value)
             });
 
             valueField.value = "";
@@ -209,59 +269,76 @@ const setupDeductions = () => {
     });
 };
 
+const calculateDeductionsTotal = scope => deductionState[scope].reduce((sum, item) => {
+    return roundCurrency(sum + item.value);
+}, 0);
+
+const calculatePayrollTaxes = ({ gross, dependents, deductionScope }) => {
+    const otherDeductions = calculateDeductionsTotal(deductionScope);
+    const inss = calculateInss(gross);
+    const irrf = calculateIrrf({
+        income: gross,
+        inss,
+        dependents,
+        deductions: otherDeductions
+    });
+    const totalTaxes = roundCurrency(inss + irrf.tax);
+    const net = roundCurrency(gross - totalTaxes);
+    const effectiveRate = gross > 0 ? (totalTaxes / gross) * 100 : 0;
+
+    return {
+        effectiveRate,
+        inss,
+        irrf,
+        net,
+        otherDeductions,
+        totalTaxes
+    };
+};
+
 const calculators = {
     partnerTaxes: () => {
         const gross = getNumber("socioBruto");
         const dependents = getNumber("socioDependentes");
-        const otherDeductions = deductionState.socio.reduce((sum, item) => sum + item.value, 0);
-        const inss = calculateInss(gross);
-        const irrf = calculateIrrf({
-            income: gross,
-            inss,
+        const payrollTaxes = calculatePayrollTaxes({
+            gross,
             dependents,
-            deductions: otherDeductions
+            deductionScope: "socio"
         });
-        const totalTaxes = inss + irrf.tax;
-        const net = gross - totalTaxes;
-        const effectiveRate = gross > 0 ? (totalTaxes / gross) * 100 : 0;
 
-        setResult("resultadoSocio", totalTaxes);
+        setCurrencyResult("resultadoSocio", payrollTaxes.totalTaxes);
         setBreakdown("detalheSocio", [
-            { label: "INSS", value: formatCurrency(inss) },
-            { label: "IRRF", value: formatCurrency(irrf.tax) },
-            { label: "Deduções adicionadas", value: formatCurrency(otherDeductions) },
-            { label: "Total de impostos", value: formatCurrency(totalTaxes) },
-            { label: "Líquido estimado", value: formatCurrency(net) },
-            { label: "Carga efetiva", value: `${effectiveRate.toLocaleString("pt-BR", { maximumFractionDigits: 2 })}%` }
+            { label: "INSS", value: formatCurrency(payrollTaxes.inss) },
+            { label: "IRRF", value: formatCurrency(payrollTaxes.irrf.tax) },
+            { label: "Deducoes adicionadas", value: formatCurrency(payrollTaxes.otherDeductions) },
+            { label: "Total de impostos", value: formatCurrency(payrollTaxes.totalTaxes) },
+            { label: "Liquido estimado", value: formatCurrency(payrollTaxes.net) },
+            { label: "Carga efetiva", value: `${payrollTaxes.effectiveRate.toLocaleString("pt-BR", { maximumFractionDigits: 2 })}%` }
         ]);
     },
     prolabore: () => {
         const gross = getNumber("prolaboreBruto");
         const dependents = getNumber("prolaboreDependentes");
-        const otherDeductions = deductionState.prolabore.reduce((sum, item) => sum + item.value, 0);
-        const inss = calculateInss(gross);
-        const irrf = calculateIrrf({
-            income: gross,
-            inss,
+        const payrollTaxes = calculatePayrollTaxes({
+            gross,
             dependents,
-            deductions: otherDeductions
+            deductionScope: "prolabore"
         });
-        const net = gross - inss - irrf.tax;
 
-        setResult("resultadoProlabore", net);
+        setCurrencyResult("resultadoProlabore", payrollTaxes.net);
         setBreakdown("detalheProlabore", [
-            { label: "INSS", value: formatCurrency(inss) },
-            { label: "IRRF", value: formatCurrency(irrf.tax) },
-            { label: "Deduções adicionadas", value: formatCurrency(otherDeductions) },
-            { label: "Base IRRF", value: formatCurrency(irrf.base) }
+            { label: "INSS", value: formatCurrency(payrollTaxes.inss) },
+            { label: "IRRF", value: formatCurrency(payrollTaxes.irrf.tax) },
+            { label: "Deducoes adicionadas", value: formatCurrency(payrollTaxes.otherDeductions) },
+            { label: "Base IRRF", value: formatCurrency(payrollTaxes.irrf.base) }
         ]);
     },
     irrf: () => {
         const income = getNumber("salarioIrrf");
         const manualInss = getNumber("inssIrrf");
-        const inss = manualInss > 0 ? manualInss : calculateInss(income);
+        const inss = manualInss > 0 ? roundCurrency(manualInss) : calculateInss(income);
         const dependents = getNumber("dependentesIrrf");
-        const deductions = deductionState.irrf.reduce((sum, item) => sum + item.value, 0);
+        const deductions = calculateDeductionsTotal("irrf");
         const result = calculateIrrf({
             income,
             inss,
@@ -273,7 +350,7 @@ const calculators = {
         setBreakdown("detalheIrrf", [
             { label: "INSS usado", value: formatCurrency(inss) },
             { label: "Dependentes", value: formatCurrency(result.dependentDeduction) },
-            { label: "Deduções adicionadas", value: formatCurrency(deductions) },
+            { label: "Deducoes adicionadas", value: formatCurrency(deductions) },
             { label: "Modelo aplicado", value: result.useSimplified ? "Simplificado" : "Legal" },
             { label: "Base IRRF", value: formatCurrency(result.base) }
         ]);
@@ -282,16 +359,17 @@ const calculators = {
         const salary = getNumber("salarioFgts");
         const rate = getNumber("aliquotaFgts") / 100;
 
-        setResult("resultadoFgts", salary * rate);
+        setCurrencyResult("resultadoFgts", roundCurrency(salary * rate));
     },
-    compound: () => {
+    compoundInterest: () => {
         const capital = getNumber("capital");
         const rate = getNumber("juros") / 100;
         const months = getNumber("tempo");
-        const total = capital * ((1 + rate) ** months);
+        const total = roundCurrency(capital * ((1 + rate) ** months));
 
-        setResult("resultadoJuros", total);
-    }
+        setCurrencyResult("resultadoJuros", total);
+    },
+    compound: () => calculators.compoundInterest()
 };
 
 document.addEventListener("DOMContentLoaded", () => {

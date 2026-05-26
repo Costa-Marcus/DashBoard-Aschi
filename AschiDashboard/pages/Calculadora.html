@@ -11,7 +11,7 @@
 </head>
 <body>
     <div class="layout">
-        <aside class="sidebar" id="sidebar" aria-label="Navegação principal">
+        <aside class="sidebar" id="sidebar" aria-label="Navegacao principal">
             <div>
                 <header class="logo-area">
                     <button class="toggle-btn" id="toggleBtn" type="button" aria-label="Alternar menu lateral" aria-expanded="true">
@@ -28,21 +28,9 @@
                         <i class="fa-solid fa-chart-line"></i>
                         <span>Dashboard</span>
                     </a>
-                    <a href="#">
-                        <i class="fa-solid fa-arrow-trend-up"></i>
-                        <span>Entradas</span>
-                    </a>
-                    <a href="#">
-                        <i class="fa-solid fa-arrow-trend-down"></i>
-                        <span>Saídas</span>
-                    </a>
-                    <a href="#">
-                        <i class="fa-solid fa-file-invoice-dollar"></i>
-                        <span>Contas</span>
-                    </a>
-                    <a href="#">
-                        <i class="fa-solid fa-chart-pie"></i>
-                        <span>Relatórios</span>
+                    <a href="../index.html#clientes">
+                        <i class="fa-solid fa-users"></i>
+                        <span>Clientes</span>
                     </a>
                     <a href="Calculadora.html" class="active" aria-current="page">
                         <i class="fa-solid fa-calculator"></i>
@@ -65,42 +53,42 @@
         <main class="main-content">
             <header class="topbar">
                 <section class="topbar-text" aria-labelledby="calculadorasTitle">
-                    <span class="eyebrow">Rotina contábil</span>
+                    <span class="eyebrow">Rotina contabil</span>
                     <h2 id="calculadorasTitle">Calculadoras</h2>
-                    <p>Ferramentas focadas em pró-labore, IRRF, FGTS e projeções financeiras.</p>
+                    <p>Ferramentas focadas em pro-labore, IRRF, FGTS e projecoes financeiras.</p>
                 </section>
             </header>
 
-            <section class="calculators-grid" aria-label="Calculadoras disponíveis">
+            <section class="calculators-grid" aria-label="Calculadoras disponiveis">
                 <article class="calculator-card glass featured-card">
                     <header class="card-header">
                         <div class="icon blue">
                             <i class="fa-solid fa-user-tie"></i>
                         </div>
                         <div>
-                            <h3>Pró-labore</h3>
-                            <p>Calcula INSS progressivo, IRRF estimado e valor líquido do sócio.</p>
+                            <h3>Pro-labore</h3>
+                            <p>Calcula INSS progressivo, IRRF estimado e valor liquido do socio.</p>
                         </div>
                     </header>
 
                     <form class="calculator-form" data-calculator="prolabore">
-                        <label for="prolaboreBruto">Pró-labore bruto</label>
+                        <label for="prolaboreBruto">Pro-labore bruto</label>
                         <input type="number" id="prolaboreBruto" name="prolaboreBruto" min="0" step="0.01" placeholder="Ex: 7500">
 
                         <label for="prolaboreDependentes">Dependentes</label>
                         <input type="number" id="prolaboreDependentes" name="prolaboreDependentes" min="0" step="1" placeholder="Ex: 1">
 
                         <div class="deduction-builder" data-deduction-scope="prolabore">
-                            <label for="tipoDeducaoProlabore">Adicionar dedução</label>
+                            <label for="tipoDeducaoProlabore">Adicionar deducao</label>
                             <div class="deduction-row">
                                 <select id="tipoDeducaoProlabore" data-deduction-type>
-                                    <option value="Pensão alimentícia">Pensão alimentícia</option>
-                                    <option value="Previdência privada">Previdência privada</option>
+                                    <option value="Pensao alimenticia">Pensao alimenticia</option>
+                                    <option value="Previdencia privada">Previdencia privada</option>
                                     <option value="FAPI">FAPI</option>
-                                    <option value="Previdência oficial complementar">Previdência oficial complementar</option>
-                                    <option value="Outra dedução legal">Outra dedução legal</option>
+                                    <option value="Previdencia oficial complementar">Previdencia oficial complementar</option>
+                                    <option value="Outra deducao legal">Outra deducao legal</option>
                                 </select>
-                                <input type="number" data-deduction-value min="0" step="0.01" placeholder="Valor">
+                                <input type="number" id="valorDeducaoProlabore" data-deduction-value min="0" step="0.01" placeholder="Valor">
                                 <button type="button" data-add-deduction>
                                     <i class="fa-solid fa-plus"></i>
                                 </button>
@@ -121,29 +109,29 @@
                             <i class="fa-solid fa-briefcase"></i>
                         </div>
                         <div>
-                            <h3>Retirada do Sócio</h3>
-                            <p>Informe quanto o sócio ganha e veja a estimativa de impostos sobre pró-labore.</p>
+                            <h3>Retirada do Socio</h3>
+                            <p>Informe quanto o socio ganha e veja a estimativa de impostos sobre pro-labore.</p>
                         </div>
                     </header>
 
                     <form class="calculator-form" data-calculator="partnerTaxes">
-                        <label for="socioBruto">Valor recebido como sócio</label>
+                        <label for="socioBruto">Valor recebido como socio</label>
                         <input type="number" id="socioBruto" name="socioBruto" min="0" step="0.01" placeholder="Ex: 10000">
 
                         <label for="socioDependentes">Dependentes</label>
                         <input type="number" id="socioDependentes" name="socioDependentes" min="0" step="1" placeholder="Ex: 0">
 
                         <div class="deduction-builder" data-deduction-scope="socio">
-                            <label for="tipoDeducaoSocio">Adicionar dedução</label>
+                            <label for="tipoDeducaoSocio">Adicionar deducao</label>
                             <div class="deduction-row">
                                 <select id="tipoDeducaoSocio" data-deduction-type>
-                                    <option value="Pensão alimentícia">Pensão alimentícia</option>
-                                    <option value="Previdência privada">Previdência privada</option>
+                                    <option value="Pensao alimenticia">Pensao alimenticia</option>
+                                    <option value="Previdencia privada">Previdencia privada</option>
                                     <option value="FAPI">FAPI</option>
-                                    <option value="Previdência oficial complementar">Previdência oficial complementar</option>
-                                    <option value="Outra dedução legal">Outra dedução legal</option>
+                                    <option value="Previdencia oficial complementar">Previdencia oficial complementar</option>
+                                    <option value="Outra deducao legal">Outra deducao legal</option>
                                 </select>
-                                <input type="number" data-deduction-value min="0" step="0.01" placeholder="Valor">
+                                <input type="number" id="valorDeducaoSocio" data-deduction-value min="0" step="0.01" placeholder="Valor">
                                 <button type="button" data-add-deduction>
                                     <i class="fa-solid fa-plus"></i>
                                 </button>
@@ -165,12 +153,12 @@
                         </div>
                         <div>
                             <h3>IRRF Mensal</h3>
-                            <p>Simula o imposto com INSS, dependentes, desconto simplificado e deduções legais.</p>
+                            <p>Simula o imposto com INSS, dependentes, desconto simplificado e deducoes legais.</p>
                         </div>
                     </header>
 
                     <form class="calculator-form" data-calculator="irrf">
-                        <label for="salarioIrrf">Rendimento tributável</label>
+                        <label for="salarioIrrf">Rendimento tributavel</label>
                         <input type="number" id="salarioIrrf" name="salarioIrrf" min="0" step="0.01" placeholder="Ex: 6500">
 
                         <label for="inssIrrf">INSS descontado</label>
@@ -180,16 +168,16 @@
                         <input type="number" id="dependentesIrrf" name="dependentesIrrf" min="0" step="1" placeholder="Ex: 1">
 
                         <div class="deduction-builder" data-deduction-scope="irrf">
-                            <label for="tipoDeducaoIrrf">Adicionar dedução</label>
+                            <label for="tipoDeducaoIrrf">Adicionar deducao</label>
                             <div class="deduction-row">
                                 <select id="tipoDeducaoIrrf" data-deduction-type>
-                                    <option value="Pensão alimentícia">Pensão alimentícia</option>
-                                    <option value="Previdência privada">Previdência privada</option>
+                                    <option value="Pensao alimenticia">Pensao alimenticia</option>
+                                    <option value="Previdencia privada">Previdencia privada</option>
                                     <option value="FAPI">FAPI</option>
-                                    <option value="Previdência oficial complementar">Previdência oficial complementar</option>
-                                    <option value="Outra dedução legal">Outra dedução legal</option>
+                                    <option value="Previdencia oficial complementar">Previdencia oficial complementar</option>
+                                    <option value="Outra deducao legal">Outra deducao legal</option>
                                 </select>
-                                <input type="number" data-deduction-value min="0" step="0.01" placeholder="Valor">
+                                <input type="number" id="valorDeducaoIrrf" data-deduction-value min="0" step="0.01" placeholder="Valor">
                                 <button type="button" data-add-deduction>
                                     <i class="fa-solid fa-plus"></i>
                                 </button>
@@ -211,15 +199,15 @@
                         </div>
                         <div>
                             <h3>FGTS</h3>
-                            <p>Calcula o depósito mensal sobre a remuneração informada.</p>
+                            <p>Calcula o deposito mensal sobre a remuneracao informada.</p>
                         </div>
                     </header>
 
                     <form class="calculator-form" data-calculator="fgts">
-                        <label for="salarioFgts">Remuneração</label>
+                        <label for="salarioFgts">Remuneracao</label>
                         <input type="number" id="salarioFgts" name="salarioFgts" min="0" step="0.01" placeholder="Ex: 3800">
 
-                        <label for="aliquotaFgts">Alíquota (%)</label>
+                        <label for="aliquotaFgts">Aliquota (%)</label>
                         <input type="number" id="aliquotaFgts" name="aliquotaFgts" min="0" step="0.01" value="8">
 
                         <button type="submit">Calcular</button>
@@ -243,7 +231,7 @@
                         <label for="capital">Capital inicial</label>
                         <input type="number" id="capital" name="capital" min="0" step="0.01" placeholder="Ex: 10000">
 
-                        <label for="juros">Juros ao mês (%)</label>
+                        <label for="juros">Juros ao mes (%)</label>
                         <input type="number" id="juros" name="juros" step="0.01" placeholder="Ex: 1.5">
 
                         <label for="tempo">Prazo em meses</label>
